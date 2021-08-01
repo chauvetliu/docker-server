@@ -1,0 +1,7 @@
+
+#LADP
+fastcgi_param  SITE_LDAP_HOST     '192.168.200.250';
+fastcgi_param  SITE_LDAP_PORT     '389';
+fastcgi_param  SITE_LDAP_USER     'OPWeb1';
+fastcgi_param  SITE_LDAP_PASS     'M5a6%9p#3Ye7';
+

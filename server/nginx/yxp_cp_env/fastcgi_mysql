@@ -1,0 +1,138 @@
+
+#MYSQL
+fastcgi_param  DB_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_YXP_CP_PORT  3306;
+fastcgi_param  DB_YXP_CP_USER  xin;
+fastcgi_param  DB_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_CHEYIMAI_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_CHEYIMAI_PORT  3306;
+fastcgi_param  DB_CHEYIMAI_USER  xin;
+fastcgi_param  DB_CHEYIMAI_PASS  48sdf37EB7;
+fastcgi_param  DB_CHEYIMAI_NAME  cheyimai;
+
+fastcgi_param  DB_CHEZHU_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_CHEZHU_PORT  3306;
+fastcgi_param  DB_CHEZHU_USER  xin;
+fastcgi_param  DB_CHEZHU_PASS  48sdf37EB7;
+fastcgi_param  DB_CHEZHU_NAME  yxp_cz;
+
+fastcgi_param  DB_CRM_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_CRM_PORT  3306;
+fastcgi_param  DB_CRM_USER  xin;
+fastcgi_param  DB_CRM_PASS  48sdf37EB7;
+fastcgi_param  DB_CRM_NAME  crm;
+
+fastcgi_param  DB_FORD_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_FORD_PORT  3306;
+fastcgi_param  DB_FORD_USER  xin;
+fastcgi_param  DB_FORD_PASS  48sdf37EB7;
+fastcgi_param  DB_FORD_NAME  ford;
+
+fastcgi_param  DB_CHERY_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_CHERY_PORT  3306;
+fastcgi_param  DB_CHERY_USER  xin;
+fastcgi_param  DB_CHERY_PASS  48sdf37EB7;
+fastcgi_param  DB_CHERY_NAME  chery;
+
+fastcgi_param  DB_WULIU_HOST  'rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com';
+fastcgi_param  DB_WULIU_PORT  '3306';
+fastcgi_param  DB_WULIU_USER  'xin';
+fastcgi_param  DB_WULIU_PASS  '48sdf37EB7';
+fastcgi_param  DB_WULIU_NAME  'wuliu';
+
+fastcgi_param  DB_UXIN_HOST  'rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com';
+fastcgi_param  DB_UXIN_PORT  '3306';
+fastcgi_param  DB_UXIN_USER  'xin';
+fastcgi_param  DB_UXIN_PASS  '48sdf37EB7';
+fastcgi_param  DB_UXIN_NAME  'uxin';
+
+fastcgi_param  DB_CHAKE_HOST  'rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com';
+fastcgi_param  DB_UXIN_PORT  '3306';
+fastcgi_param  DB_UXIN_USER  'xin';
+fastcgi_param  DB_UXIN_PASS  '48sdf37EB7';
+fastcgi_param  DB_UXIN_NAME  'uxin';
+
+fastcgi_param  DB_BENZ_HOST  'rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com';
+fastcgi_param  DB_BENZ_PORT  '3306';
+fastcgi_param  DB_BENZ_USER  'db1';
+fastcgi_param  DB_BENZ_PASS  '123123';
+fastcgi_param  DB_BENZ_NAME  'benz';
+
+fastcgi_param  DB_YXP_CP_HOST_R  'rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com';
+fastcgi_param  DB_YXP_CP_PORT_R  '3306';
+fastcgi_param  DB_YXP_CP_USER_R  'reader';
+fastcgi_param  DB_YXP_CP_PASS_R  '123456';
+fastcgi_param  DB_YXP_CP_NAME_R  'yxp_cp';
+
+fastcgi_param  DB_APP_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_APP_YXP_CP_USER  xin;
+fastcgi_param  DB_APP_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_APP_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_AGENT_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_AGENT_YXP_CP_USER  xin;
+fastcgi_param  DB_AGENT_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_AGENT_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_DEALER_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_DEALER_YXP_CP_USER  xin;
+fastcgi_param  DB_DEALER_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_DEALER_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_PADAPI_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_PADAPI_YXP_CP_USER  xin;
+fastcgi_param  DB_PADAPI_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_PADAPI_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_DAIBAN_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_DAIBAN_YXP_CP_USER  xin;
+fastcgi_param  DB_DAIBAN_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_DAIBAN_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_DAIBAN_YXP_CP_HOST_R  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_DAIBAN_YXP_CP_USER_R  reader;
+fastcgi_param  DB_DAIBAN_YXP_CP_PASS_R  123456;
+fastcgi_param  DB_DAIBAN_YXP_CP_NAME_R  yxp_cp;
+
+fastcgi_param  DB_DELIVER_YXP_CP_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_DELIVER_YXP_CP_USER  xin;
+fastcgi_param  DB_DELIVER_YXP_CP_PASS  48sdf37EB7;
+fastcgi_param  DB_DELIVER_YXP_CP_NAME  yxp_cp;
+
+fastcgi_param  DB_DELIVER_YXP_CP_HOST_R  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_DELIVER_YXP_CP_USER_R  reader;
+fastcgi_param  DB_DELIVER_YXP_CP_PASS_R  123456;
+fastcgi_param  DB_DELIVER_YXP_CP_NAME_R  yxp_cp;
+fastcgi_param  DB_PADAPI_YXP_CP_HOST_R  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_PADAPI_YXP_CP_USER_R  reader;
+fastcgi_param  DB_PADAPI_YXP_CP_PASS_R  123456;
+fastcgi_param  DB_PADAPI_YXP_CP_NAME_R  yxp_cp;
+
+
+fastcgi_param  DB_WBGH_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_WBGH_PORT  3306;
+fastcgi_param  DB_WBGH_USER  xin;
+fastcgi_param  DB_WBGH_PASS  48sdf37EB7;
+fastcgi_param  DB_WBGH_NAME  wbgh;
+
+#changan-ford
+fastcgi_param  DB_FORD_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_FORD_PORT  3306;
+fastcgi_param  DB_FORD_USER  xin;
+fastcgi_param  DB_FORD_PASS  48sdf37EB7;
+fastcgi_param  DB_FORD_NAME  ford;
+
+#ford-new
+fastcgi_param  DB_FORD2_HOST  rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com;
+fastcgi_param  DB_FORD2_PORT  3306;
+fastcgi_param  DB_FORD2_USER  xin;
+fastcgi_param  DB_FORD2_PASS  48sdf37EB7;
+fastcgi_param  DB_FORD2_NAME  ford2;
+
+fastcgi_param MONGO_DELIVER_HOST 'rm-2ze7n6ku032v5pk91.mysql.rds.aliyuncs.com';
+fastcgi_param MONGO_DELIVER_PORT 27017;
+fastcgi_param MONGO_DELIVER_NAME 'yxp_cp';
+fastcgi_param MONGO_DELIVER_USER  'xin';
+fastcgi_param MONGO_DELIVER_PASS  'uxin123';

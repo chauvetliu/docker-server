@@ -1,0 +1,53 @@
+
+#ENV
+fastcgi_param  SITE_ENV            'testing';
+fastcgi_param  APP_ENV             'testing';
+
+#PHP
+fastcgi_pass   php71:9000;
+fastcgi_param  SCRIPT_FILENAME   	$document_root$fastcgi_script_name;
+
+
+
+#CACHE
+fastcgi_param  SITE_MEMC_SERVER   '172.18.98.10:11211';
+fastcgi_param  SITE_REDIS_SERVER  '172.18.98.10:6379';
+fastcgi_param  SITE_REDIS_SERVER_QDS  '192.168.201.206:6371';
+fastcgi_param  SITE_DABANMA_MEMC_SERVER   '172.18.98.10:11211';
+fastcgi_param  SITE_DABANMA_REDIS_SERVER '172.18.98.10:6379';  #'172.18.98.10:6379';
+fastcgi_param  SITE_GEARMAN_SERVER  '172.18.98.10:4730';
+fastcgi_param  SITE_MEMCQ_SERVER  '172.18.98.10:22201';
+
+#DOMAIN
+fastcgi_param  SITE_DOMAIN_CHAKE            'huoyan.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_YXP              'test31.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_PADAPI           'padapi.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_CP               'cp.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_CZ_YXP           'cz.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_CRM_YXP          'crm.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_CRM_CYM          'crm.test.cheyimai.com';
+fastcgi_param  SITE_DOMAIN_CRM_NEW          'crmnew.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_GEARMAN          'gm.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_OA               'oa.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_XIN              'www.ceshi.xin.com';
+fastcgi_param  SITE_DOMAIN_CP_XIN           'cp.test.xin.com';
+fastcgi_param  SITE_DOMAIN_API_XIN          'api.test.xin.com';
+fastcgi_param  SITE_DOMAIN_M_XIN            'm.ceshi.xin.com';
+fastcgi_param  SITE_DOMAIN_NB_XIN       	'nb.test.xin.com';
+fastcgi_param  SITE_DOMAIN_WBGH_XIN       	'wbgh.test.xin.com';
+fastcgi_param  SITE_DOMAIN_BENZ       		'benzcs.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_JUZHEN     		'juzhen.test.youxinpai.com';
+fastcgi_param  SITE_DOMAIN_YXP_DAILIREN  	'192.168.200.31:5555';
+fastcgi_param  SITE_DOMAIN_APOLLO      		'aplwebsite.com';
+fastcgi_param  SITE_DOMAIN_DAILIREN  		'192.168.200.31:8070';
+fastcgi_param  SITE_DOMAIN_AUCTIONSERVICE   'auctionService.test.youxinpai.com';
+
+#RABBIT MQ
+fastcgi_param AMQ_HOST  	'192.168.201.219,192.168.201.218,192.168.201.220';
+fastcgi_param AMQ_PORT  	5672;
+fastcgi_param AMQ_LOGIN  	'guest';
+fastcgi_param AMQ_PASSWORD  'guest';
+fastcgi_param AMQ_VHOST  	'/';
+
+#PATH
+include yxp_cp_env/fastcgi_dir;
