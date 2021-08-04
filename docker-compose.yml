@@ -1,23 +1,23 @@
 version: '3'
 services:
     nginx:
-      image: "nginx:1.21.0"
+      build:
+        context: server/nginx
+        dockerfile: Dockerfile
+        args:
+          NGINX_VERSION: ${NGINX_VERSION}
+          NGINX_HTML: ${NGINX_HTML}
       ports: 
-        #- "80:80"
-        #- "8080:8080"
+        - "80:80"
+        - "8080:8080"
         - "8888:8888"
       container_name: "nginx121"
       restart: always
       volumes: 
         - ${PWD}/server/nginx/conf.d:/etc/nginx/conf.d/:rw
-        - ${PWD}/server/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-        - ${PWD}logs/server-logs/nginx/logs:/var/log/nginx/:rw
-        - ${WWW_PATH}:/usr/share/nginx/html/:rw 
-      # logging:
-      #   driver: "json-file"
-      #   options:
-      #      max-size: "1000k"
-      #      max-file: "10"
+        - ${PWD}/server/nginx/nginx.conf:/etc/nginx/nginx.conf:rw
+        - ${PWD}/logs/server-logs/nginx/:/var/log/nginx/:rw
+        - ${NGINX_HTML}:/usr/share/nginx/html/:rw 
       cap_add:
           - ALL    
       environment:
@@ -26,86 +26,8 @@ services:
       networks:
         - dev  
 
-    php74:
-      build:
-        context: server/php/php74
-        dockerfile: Dockerfile
-        args:
-          PHP74_VERSION: ${PHP74_VERSION}
-          PHP74_PATH: ${PHP74_PATH}
-      ports: 
-        - "9100:9000"    
-      container_name: "php74"
-      restart: always
-      volumes: 
-        - ${WWW_PATH}:/usr/share/nginx/html/:rw 
-        - ${PWD}/server/php/php74/conf:/usr/local/etc/php:rw
-        #- ${PWD}/server/php/php74/conf/php.ini:/usr/local/etc/php/php.ini:rw 
-      depends_on:
-          - nginx
-      networks:
-         - dev
-         # - sqlnet:
-         #   ipv4_address: 192.168.1.5
 
-    # mysql:
-    #     image: "mysql:5.6.44" 
-    #     ports:
-    #         - "3308:3306"
-    #     container_name: "mysql56"    
-    #     restart: always
-    #     volumes:
-    #       - ${PWD}/mysql:/var/lib/mysql:rw
-    #       - ${PWD}/mysql/conf/mysql.cnf:/etc/mysql/mysql.cnf:ro
-    #     environment:
-    #         MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-    #     depends_on:
-    #       - nginx
-    #     networks:
-    #       - dev      
-
-    # php73:
-    #   build:
-    #     context: php/php73
-    #     dockerfile: Dockerfile
-    #     args:
-    #       PHP_VERSION: ${PHP73_VERSION}
-    #       PHP_REDIS: ${PHP73_REDIS}
-    #       PHP73_MONGODB: ${PHP73_MONGODB}
-    #       PHP73_PATH: ${PHP73_PATH}
-    #   ports: 
-    #     - "9000:9000"    
-    #   container_name: "php73"
-    #   restart: always
-    #   volumes: 
-    #     - ${WWW_PATH}:/usr/share/nginx/html/:rw 
-    #     - ${PWD}/php/php73/conf:/usr/local/etc/php:rw
-    #     - ${PWD}/php/php73/conf/php.ini:/usr/local/etc/php/php.ini:rw
-    #   depends_on:
-    #       - nginx
-    #   networks:
-    #     - dev  
-
-    # composer:
-    #     image: "composer:1.8.6"   
-    #     container_name: "composer18"   
-    #     restart: always
-    #     volumes: 
-    #       - $PWD/composer:/usr/local/bin/composer:rw
-    #     working_dir: ${WWW_PATH}
-    #     command: composer install
-    #     networks:
-    #       - dev   
 
 networks:
     dev:
         driver: bridge  
-    # sqlnet:    
-    #     driver: bridge  
-    #     ipam:
-    #       config:
-    #          - subnet: "192.168.1.0/24"
-             #- gateway: "192.168.1.1"  
-
-
-

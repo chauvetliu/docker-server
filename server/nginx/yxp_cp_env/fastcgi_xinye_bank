@@ -1,7 +1,0 @@
-
-fastcgi_param  SITE_XINYE_URL       'http://172.16.100.175:8007';
-fastcgi_param  SITE_XINYE_CID       '3200672651';
-fastcgi_param  SITE_XINYE_USER      'uxin';
-fastcgi_param  SITE_XINYE_PASS      '123abc';
-fastcgi_param  SITE_XINYE_ACCOUNT   '326660100100118826';
-

@@ -1,7 +1,0 @@
-
-#配置路径
-fastcgi_param  SITE_NGINX_LOG_DIR 	/Users/liuxiaowei/Documents/logs/nginx/;
-fastcgi_param  SITE_IMG_DIR      	/Users/liuxiaowei/Documents/logs/netapp/image/;
-fastcgi_param  SITE_DATA_DIR     	/Users/liuxiaowei/Documents/logs/netapp/data/;
-fastcgi_param  SITE_CACHE_DIR    	/Users/liuxiaowei/Documents/logs/nginx/cache/$server_name/;
-fastcgi_param  SITE_LOG_DIR      	/Users/liuxiaowei/Documents/log/nginx-logs/site-log-dir/$server_name/;
