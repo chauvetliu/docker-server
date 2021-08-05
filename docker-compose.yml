@@ -2,7 +2,7 @@ version: '3'
 services:
     nginx:
       build:
-        context: server/nginx
+        context: server/nginx/nginx1.21.0
         dockerfile: Dockerfile
         args:
           NGINX_VERSION: ${NGINX_VERSION}
