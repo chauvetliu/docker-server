@@ -1,0 +1,3 @@
+
+fastcgi_param SITE_REDIS_SERVER              "127.0.0.1:6379";
+fastcgi_param SITE_XIN_ADMIN_REDIS_SERVER    "127.0.0.1:6379";

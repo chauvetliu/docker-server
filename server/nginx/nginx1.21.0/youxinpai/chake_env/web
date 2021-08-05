@@ -1,0 +1,5 @@
+fastcgi_param           SITE_ENV             "testing";
+fastcgi_param           SITE_REDIS_SERVER    "127.0.0.1:6379";
+fastcgi_param           SITE_DATA_DIR        "/storage/";
+fastcgi_param			SITE_CACHE_DIR		 "/storage/cache/";
+fastcgi_param           SITE_LOG_DIR         "/Users/liuxiaowei/Documents/log/nginx-logs/ckapi.xin.com/";

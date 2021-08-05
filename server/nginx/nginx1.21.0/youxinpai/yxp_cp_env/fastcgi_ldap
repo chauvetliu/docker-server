@@ -1,0 +1,7 @@
+
+#LADP
+fastcgi_param  SITE_LDAP_HOST     '101.251.218.102';
+fastcgi_param  SITE_LDAP_PORT     '389';
+fastcgi_param  SITE_LDAP_USER     'uxin\ldap_zabbix';
+fastcgi_param  SITE_LDAP_PASS     'zabbix@youxin123';
+

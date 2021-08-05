@@ -1,0 +1,46 @@
+fastcgi_param SITE_ENV "testing";
+fastcgi_param SITE_CACHE_DIR     "/Users/liuxiaowei/Documents/log/nginx-logs/chake.xin.com";
+fastcgi_param  SITE_DATA_DIR  '/Users/liuxiaowei/Documents/log/nginx-logs/chake.xin.com';
+
+fastcgi_param  DB_CHAKE_XIN_CK_HOST_R   "10.170.70.146";
+fastcgi_param  DB_CHAKE_XIN_CK_PORT_R   "8036";
+fastcgi_param  DB_CHAKE_XIN_CK_USER_R   "xin_ck";
+fastcgi_param  DB_CHAKE_XIN_CK_PASS_R   "0a431d467e53400f";
+fastcgi_param  DB_CHAKE_XIN_CK_NAME_R   "xin_ck";
+
+fastcgi_param  DB_CHAKE_XIN_CK_HOST_W   "10.170.70.146";
+fastcgi_param  DB_CHAKE_XIN_CK_PORT_W   "8036";
+fastcgi_param  DB_CHAKE_XIN_CK_USER_W   "xin_ck";
+fastcgi_param  DB_CHAKE_XIN_CK_PASS_W   "0a431d467e53400f";
+fastcgi_param  DB_CHAKE_XIN_CK_NAME_W   "xin_ck";
+
+#fastcgi_param  DB_CHAKE_XIN_CK_HOST_W   "rm-2ze0q80w59h4uyvx4rw.mysql.rds.aliyuncs.com";
+#fastcgi_param  DB_CHAKE_XIN_CK_PORT_W   "3306";
+#fastcgi_param  DB_CHAKE_XIN_CK_USER_W   "xin";
+#fastcgi_param  DB_CHAKE_XIN_CK_PASS_W   "48sdf37EB7";
+#fastcgi_param  DB_CHAKE_XIN_CK_NAME_W   "xin_ck";
+
+fastcgi_param DB_APT_XIN_HOST_W   "rm-2ze0q80w59h4uyvx4rw.mysql.rds.aliyuncs.com";
+fastcgi_param DB_APT_XIN_USER_W   "xin";
+fastcgi_param DB_APT_XIN_PASS_W   "48sdf37EB7";
+fastcgi_param DB_APT_XIN_PORT_W   "3306";
+fastcgi_param DB_APT_XIN_NAME_W   "xin";
+
+fastcgi_param DB_APT_XIN_HOST_R   "rm-2ze0q80w59h4uyvx4rw.mysql.rds.aliyuncs.com";
+fastcgi_param DB_APT_XIN_USER_R   "xin";
+fastcgi_param DB_APT_XIN_PASS_R   "48sdf37EB7";
+fastcgi_param DB_APT_XIN_PORT_R   "3306";
+fastcgi_param DB_APT_XIN_NAME_R   "xin";
+fastcgi_param MONGO_SS_HOST "172.16.40.11";
+fastcgi_param MONGO_SS_PORT "27017";
+fastcgi_param MONGO_OREO_NAME "oreo";
+fastcgi_param MONGO_SS_USER "";
+fastcgi_param MONGO_SS_PASS "";
+fastcgi_param SITE_REDIS_DB_SERVER  "172.16.98.15";
+fastcgi_param SITE_REDIS_DB_PORT  '6481';
+fastcgi_param SITE_XIN_ADMIN_REDIS_SERVER "172.16.98.12:6379";
+
+fastcgi_param SITE_LDAP_HOST     "101.251.218.102";
+fastcgi_param SITE_LDAP_PORT     "389";
+fastcgi_param SITE_LDAP_USER     "uxin\ldap_zabbix";
+fastcgi_param SITE_LDAP_PASS     "zabbix@youxin123";

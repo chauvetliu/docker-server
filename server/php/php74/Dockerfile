@@ -9,10 +9,11 @@ ARG PHP74_PATH
 #镜像信息
 FROM php:${PHP74_VERSION}-fpm
 
-#设置时区
-#ENV TIME_ZONE=Asia/Shanghai
-#RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
+LABEL author="chauvetliu@163.com"
 
+#设置时区
+ENV TIME_ZONE=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
 
 #更改docker源
 #COPY sources.list /etc/apt/sources.list
@@ -24,6 +25,15 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
+
+
+
+
+
+
+#EXPOSE 9000
+#CMD ["php-fpm"]
+
 
 # RUN apt-get update  && apt-get install -y \
 #         git \

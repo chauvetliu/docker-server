@@ -1,0 +1,16 @@
+#fastcgi_param  DB_HOST  "rm-2ze0q80w59h4uyvx4rw.mysql.rds.aliyuncs.com";
+#fastcgi_param  DB_PORT  "3306";
+#fastcgi_param  DB_USER  "xin";
+#fastcgi_param  DB_PASS  "48sdf37EB7";
+
+fastcgi_param  DB_CHAKE_XIN_CK_HOST_R   "10.170.70.146";
+fastcgi_param  DB_CHAKE_XIN_CK_PORT_R   "8036";
+fastcgi_param  DB_CHAKE_XIN_CK_USER_R   "xin_ck";
+fastcgi_param  DB_CHAKE_XIN_CK_PASS_R   "0a431d467e53400f";
+fastcgi_param  DB_CHAKE_XIN_CK_NAME_R   "xin_ck";
+
+fastcgi_param  DB_HOST   "10.170.70.146";
+fastcgi_param  DB_PORT   "8036";
+fastcgi_param  DB_USER   "xin_ck";
+fastcgi_param  DB_PASS   "0a431d467e53400f";
+fastcgi_param  DB_NAME   "xin_ck";
