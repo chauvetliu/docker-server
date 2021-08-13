@@ -27,7 +27,7 @@ services:
           RACK_ENV: development
           SESSION_SECRET: 
       networks:
-        - dev  
+        - lampnetwork  
         
     php74:
       build:
@@ -37,8 +37,7 @@ services:
           PHP74_VERSION: ${PHP74_VERSION}
           PHP74_PATH: ${PHP74_PATH}
       ports: 
-        - "9000:9000" 
-        - "9100:9100"      
+        - "9000:9000"    
       container_name: "php74"
       restart: always
       volumes: 
@@ -47,9 +46,13 @@ services:
       depends_on:
           - nginx
       networks:
-          - dev
-
+          - lampnetwork
 
 networks:
+    lampnetwork:
+      ipam:
+        config:
+        - subnet: 172.18.0.0/16
+         gateway: 172.18.0.1
     dev:
         driver: bridge  
