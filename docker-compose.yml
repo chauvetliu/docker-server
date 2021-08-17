@@ -27,7 +27,8 @@ services:
           RACK_ENV: development
           SESSION_SECRET: 
       networks:
-        - lampnetwork  
+        lampnetwork:
+          ipv4_address: 172.19.0.2
         
     php74:
       build:
@@ -46,13 +47,12 @@ services:
       depends_on:
           - nginx
       networks:
-          - lampnetwork
+        lampnetwork:
+          ipv4_address: 172.19.0.3
 
 networks:
     lampnetwork:
       ipam:
+        driver: default
         config:
-        - subnet: 172.18.0.0/16
-         gateway: 172.18.0.1
-    dev:
-        driver: bridge  
+        - subnet: "172.19.0.0/16"
