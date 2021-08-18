@@ -70,4 +70,4 @@ fastcgi_param AMQ_PASSWORD  'guest';
 fastcgi_param AMQ_VHOST  	'/';
 
 #PATH
-include uxin/yxp_cp_env/fastcgi_dir;
+include youxinpai/yxp_cp_env/fastcgi_dir;
