@@ -42,7 +42,7 @@ services:
       container_name: "php74"
       restart: always
       volumes: 
-        - ${PHP_WWW_PATH}:/var/www/html/:rw 
+        - ${PHP_WWW_PATH}:/data/htdocs/www-php/:rw 
         - ${PWD}/server/php/php74/:/usr/local/etc/:rw
       depends_on:
           - nginx
