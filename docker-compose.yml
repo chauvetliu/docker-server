@@ -2,7 +2,7 @@ version: '3'
 services:
     nginx:
       build:
-        context: server/nginx/nginx1.21.0
+        context: server/nginx/nginx-1.21.0
         dockerfile: Dockerfile
         args:
           NGINX_VERSION: ${NGINX_VERSION}
@@ -49,6 +49,27 @@ services:
       networks:
         lampnetwork:
           ipv4_address: 172.19.0.3
+
+    redis625:
+      build:
+        context: server/redis/redis-6.2.5
+        dockerfile: Dockerfile
+        args:
+          REDIS_VERSION: ${REDIS_VERSION}
+          REDIS_DATA_PATH: ${REDIS_PATH}
+      ports: 
+        - "6379:6379"    
+      container_name: "redis625"
+      restart: always
+      volumes: 
+        - ${REDIS_PATH}/data/:/data/redis/:rw 
+        - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+        - ${PWD}/logs/server-logs/redis/redis.log:/var/log/redis/redis.log:rw
+      depends_on:
+          - php74
+      networks:
+        lampnetwork:
+          ipv4_address: 172.19.0.4      
 
 networks:
     lampnetwork:
