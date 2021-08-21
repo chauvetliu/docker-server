@@ -28,7 +28,7 @@ services:
           SESSION_SECRET: 
       networks:
         lnmp:
-          ipv4_address: 172.19.0.2
+          ipv4_address: 172.17.0.10
         
     php74:
       build:
@@ -48,11 +48,11 @@ services:
           - nginx
       networks:
         lnmp:
-          ipv4_address: 172.19.0.3
+          ipv4_address: 172.17.0.20
 
 networks:
     lnmp:
       ipam:
         driver: default
         config:
-        - subnet: "172.19.0.0/16"
+        - subnet: "172.17.0.0/16"
