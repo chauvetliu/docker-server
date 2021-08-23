@@ -19,6 +19,11 @@ RUN groupadd -r -g 999 redis && useradd -r -g redis -u 999 redis
 
 #提前安装一些功能
 RUN apt-get update \
+	&& apt-get install -y curl \
+    && apt-get install -y net-tools \
+    && apt-get install -y procps \
+    && apt-get install -y inetutils-ping \
+    && apt-get install -y telnet \
     && apt-get install -y --no-install-recommends \
 				ca-certificates \
 				wget \

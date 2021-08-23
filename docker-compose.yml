@@ -35,8 +35,9 @@ services:
         context: server/php/php74
         dockerfile: Dockerfile
         args:
-          PHP74_VERSION: ${PHP74_VERSION}
           PHP74_PATH: ${PHP74_PATH}
+          PHP74_VERSION: ${PHP74_VERSION}
+          REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
       ports: 
         - "9000:9000"
       container_name: "php74"

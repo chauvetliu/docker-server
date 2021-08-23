@@ -2,9 +2,10 @@
 # chauvetliu@163.com
 # 2021-08-01
 
-ARG PHP_REDIS
-ARG PHP74_VERSION
 ARG PHP74_PATH
+ARG REDIS_VERSION
+ARG PHP74_VERSION
+ARG REDIS_DOWNLOAD_URL
 
 #镜像信息
 FROM php:${PHP74_VERSION}-fpm
@@ -24,9 +25,16 @@ RUN apt-get update && apt-get install -y \
         libjpeg62-turbo-dev \
         libpng-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
-
-
+    && docker-php-ext-install -j$(nproc) gd \
+    \
+    && echo "安装redis扩展" \
+    && curl -L -o /tmp/redis-${REDIS_VERSION}.tar.gz ${REDIS_DOWNLOAD_URL} \
+    && tar xfz /tmp/redis-${REDIS_VERSION}.tar.gz \
+    && mv package.xml redis-${REDIS_VERSION} \
+    && rm -r /tmp/redis-${REDIS_VERSION}.tar.gz \
+    && cd redis-${REDIS_VERSION} \
+    && phpize && ./configure && make && make install \
+    && echo "extension=redis.so">${PHP73_PATH}/redis.ini;
 
 
 
