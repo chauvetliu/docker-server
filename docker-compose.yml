@@ -14,18 +14,18 @@ services:
       container_name: "nginx121"
       restart: always
       volumes: 
-        - ${NGINX_HTML}:/usr/share/nginx/html/:rw 
+        - ${NGINX_HTML}:/usr/share/nginx/html/:rw
         - ${PWD}/logs/server-logs/nginx/nginx1.21.0/:/var/log/nginx/:rw
         - ${PWD}/server/nginx/nginx1.21.0/conf.d:/etc/nginx/conf.d/:rw
         - ${PWD}/server/nginx/nginx1.21.0/nginx.conf:/etc/nginx/nginx.conf:rw
         - ${PWD}/server/nginx/nginx1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw 
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
         - ${PWD}/server/nginx/nginx1.21.0/youxinpai:/etc/nginx/youxinpai/:rw
       cap_add:
-          - ALL    
+          - ALL
       environment:
           RACK_ENV: development
-          SESSION_SECRET: 
+          SESSION_SECRET:
       networks:
         lampnetwork:
           ipv4_address: 172.19.0.2
@@ -38,11 +38,11 @@ services:
           PHP74_VERSION: ${PHP74_VERSION}
           PHP74_PATH: ${PHP74_PATH}
       ports: 
-        - "9000:9000"    
+        - "9000:9000"
       container_name: "php74"
       restart: always
-      volumes: 
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw 
+      volumes:
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
         - ${PWD}/server/php/php74/:/usr/local/etc/:rw
       depends_on:
           - nginx
@@ -57,19 +57,17 @@ services:
         args:
           REDIS_VERSION: ${REDIS_VERSION}
           REDIS_DATA_PATH: ${REDIS_PATH}
-      ports: 
-        - "6379:6379"    
+      ports:
+        - "6379:6379"
       container_name: "redis625"
       restart: always
-      volumes: 
-        - ${REDIS_PATH}/data/:/data/redis/:rw 
+      volumes:
+        - ${REDIS_PATH}/data/:/data/redis/:rw
         - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
         - ${PWD}/logs/server-logs/redis/redis.log:/var/log/redis/redis.log:rw
-      depends_on:
-          - php74
       networks:
         lampnetwork:
-          ipv4_address: 172.19.0.4      
+          ipv4_address: 172.19.0.4
 
 networks:
     lampnetwork:

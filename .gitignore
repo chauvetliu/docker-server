@@ -1,3 +1,5 @@
 .DS_Store
 *.log
-htdocs/www-php/*
+htdocs/php/*
+htdocs/go/*
+htdocs/python/*
