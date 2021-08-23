@@ -10,6 +10,7 @@ FROM debian:buster-slim
 LABEL author="chauvetliu@163.com"
 
 ENV REDIS_VERSION 6.2.5
+ENV REDIS_PACKAGE_PATH ../../../package/
 ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-6.2.5.tar.gz
 ENV REDIS_DOWNLOAD_SHA 4b9a75709a1b74b3785e20a6c158cab94cf52298aa381eea947a678a60d551ae
 
@@ -32,12 +33,12 @@ RUN apt-get update \
     rm -rf /var/lib/apt/lists/*; \
 	\
 	echo "$REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c -; \
-	tar -xzf redis.tar.gz -C /usr/src/redis --strip-components=1; \
-	rm redis.tar.gz; \;
+	tar -xzf "$REDIS_DOWNLOAD_URL"redis.tar.gz -C /usr/src/redis --strip-components=1; \
+	redis-cli --version; \
+	redis-server --version \
+	;
 
 
-
-    
 #创建目录和权限
 RUN mkdir /data && chown redis:redis /data
 VOLUME /data
