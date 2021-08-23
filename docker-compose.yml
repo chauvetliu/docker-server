@@ -28,7 +28,7 @@ services:
           SESSION_SECRET:
       networks:
         lampnetwork:
-          ipv4_address: 172.19.0.2
+          ipv4_address: 172.19.0.1
         
     php74:
       build:
@@ -48,7 +48,7 @@ services:
           - nginx
       networks:
         lampnetwork:
-          ipv4_address: 172.19.0.3
+          ipv4_address: 172.19.0.2
 
     redis625:
       build:
@@ -64,10 +64,13 @@ services:
       volumes:
         - ${REDIS_PATH}/data/:/data/redis/:rw
         - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+        - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
         - ${PWD}/logs/server-logs/redis/redis.log:/var/log/redis/redis.log:rw
+      depends_on:
+          - nginx
       networks:
         lampnetwork:
-          ipv4_address: 172.19.0.4
+          ipv4_address: 172.19.0.3
 
 networks:
     lampnetwork:
