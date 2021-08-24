@@ -1,2 +1,9 @@
 .DS_Store
 *.log
+htdocs/php/*
+htdocs/go/*
+htdocs/python/*
+dump.rdb
+
+
+

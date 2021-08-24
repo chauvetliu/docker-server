@@ -8,3 +8,6 @@
     1、基于PHP的打包
     2、基于Golang语言编排
     3、包含Redis、MySQL
+
+#### 软件包地址
+    1、Redis http://download.redis.io/releases/redis-6.2.5.tar.gz    
