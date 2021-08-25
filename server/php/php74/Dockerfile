@@ -32,6 +32,11 @@ ENV REDIS_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/redis-${REDIS_EXT_
 
 #运行命令构建
 RUN apt-get update \
+    && apt-get install -y curl \
+    && apt-get install -y procps \
+    && apt-get install -y telnet \
+    && apt-get install -y net-tools \
+    && apt-get install -y inetutils-ping \
     && apt-get install -y libpng-dev \
     && apt-get install -y libfreetype6-dev \
     && apt-get install -y libjpeg62-turbo-dev \
@@ -55,8 +60,11 @@ RUN apt-get update \
     cd /tmp/redis-${REDIS_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-redis.ini; \
-    echo "extension=redis.so">${ZEND_EXTENSION_INI}/docker-php-ext-redis.ini
+    echo "extension=redis.so">${ZEND_EXTENSION_INI}/docker-php-ext-redis.ini;
 
+
+
+#ADD ${ZEND_EXTENSION_INI} 
 
     
 #   rm -rf /var/lib/apt/lists/*;

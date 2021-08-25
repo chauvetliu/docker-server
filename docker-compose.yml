@@ -14,13 +14,13 @@ services:
       container_name: "nginx121"
       restart: always
       volumes: 
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
         - ${PWD}/logs/server-logs/nginx/nginx-1.21.0/:/var/log/nginx/:rw
-        - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/nginx.conf:/etc/nginx/nginx.conf:rw
-        - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/youxinpai:/etc/nginx/youxinpai/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
       cap_add:
           - ALL
       environment:
@@ -44,8 +44,10 @@ services:
       restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
-        - ${PWD}/server/php/php74/:/usr/local/etc/:rw
-        - ${PWD}/server/php/php74/zend_extension:/usr/local/lib/php/extensions/:rw
+        - ${PWD}/server/php/php74/php/conf.d/:/usr/local/etc/php/conf.d:rw
+        - ${PWD}/server/php/php74/php/php.ini:/usr/local/etc/php.ini:rw
+        - ${PWD}/server/php/php74/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php74/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
       networks:
         lampnetwork:
           ipv4_address: 172.19.0.3
@@ -63,15 +65,15 @@ services:
       restart: always
       volumes:
         - ${REDIS_PATH}/data/:/data/redis/:rw
+        - ${PWD}/logs/server-logs/redis/:/var/log/redis/:rw
         - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
         - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
-        - ${PWD}/logs/server-logs/redis/redis.log:/var/log/redis/redis.log:rw
       depends_on:
           - php74
       networks:
         lampnetwork:
           ipv4_address: 172.19.0.4
-                
+
 networks:
     lampnetwork:
       ipam:
