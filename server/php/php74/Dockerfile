@@ -64,7 +64,7 @@ RUN apt-get update \
 
 
 
-#ADD ${ZEND_EXTENSION_INI} 
+#COPY ${ZEND_EXTENSION_INI} 
 
     
 #   rm -rf /var/lib/apt/lists/*;
