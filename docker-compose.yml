@@ -14,22 +14,22 @@ services:
       container_name: "nginx121"
       restart: always
       volumes: 
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
         - ${PWD}/logs/server-logs/nginx/nginx-1.21.0/:/var/log/nginx/:rw
-        - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/nginx.conf:/etc/nginx/nginx.conf:rw
-        - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/youxinpai:/etc/nginx/youxinpai/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
       cap_add:
           - ALL
       environment:
           RACK_ENV: development
           SESSION_SECRET:
       networks:
-        lnmp:
-          ipv4_address: 172.17.0.2
-          
+        lampnetwork:
+          ipv4_address: 172.19.0.2
+
     php74:
       build:
         context: server/php/php74
@@ -44,12 +44,15 @@ services:
       restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
-        - ${PWD}/server/php/php74/:/usr/local/etc/:rw
-        - ${PWD}/server/php/php74/zend_extension:/usr/local/lib/php/extensions/:rw
+        - ${PWD}/server/php/php74/php/php.ini:/usr/local/etc/php/php.ini:rw
+        - ${PWD}/server/php/php74/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php74/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+      depends_on:
+          - nginx121
       networks:
-        lnmp:
-          ipv4_address: 172.17.0.3
-
+        lampnetwork:
+          ipv4_address: 172.19.0.3
+    
     redis625:
       build:
         context: server/redis/redis-6.2.5
@@ -63,18 +66,18 @@ services:
       restart: always
       volumes:
         - ${REDIS_PATH}/data/:/data/redis/:rw
+        - ${PWD}/logs/server-logs/redis/:/var/log/redis/:rw
         - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
         - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
-        - ${PWD}/logs/server-logs/redis/redis.log:/var/log/redis/redis.log:rw
       depends_on:
           - php74
       networks:
         lampnetwork:
-          ipv4_address: 172.17.0.4
-                
+          ipv4_address: 172.19.0.4
+
 networks:
-    lnmp:
+    lampnetwork:
       ipam:
         driver: default
         config:
-        - subnet: "172.17.0.0/16"
+        - subnet: "172.19.0.0/16"
