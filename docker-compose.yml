@@ -47,6 +47,8 @@ services:
         - ${PWD}/server/php/php74/php/php.ini:/usr/local/etc/php/php.ini:rw
         - ${PWD}/server/php/php74/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
         - ${PWD}/server/php/php74/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+      depends_on:
+          - nginx121
       networks:
         lampnetwork:
           ipv4_address: 172.19.0.3
