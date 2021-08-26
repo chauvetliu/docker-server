@@ -1,7 +1,7 @@
 
 #配置路径
 fastcgi_param  SITE_NGINX_LOG_DIR 	/var/log/nginx;
-fastcgi_param  SITE_IMG_DIR      	/var/log/nginx/netapp/image/;
 fastcgi_param  SITE_DATA_DIR     	/var/log/nginx/netapp/data/;
 fastcgi_param  SITE_CACHE_DIR    	/var/log/nginx/cache/$server_name/;
-fastcgi_param  SITE_LOG_DIR      	/var/log/nginx/site-log-dir/$server_name/;
+#fastcgi_param  SITE_LOG_DIR      	/var/log/php/$server_name/;
+fastcgi_param  SITE_LOG_DIR      	/tmp/log/php/$server_name/;
