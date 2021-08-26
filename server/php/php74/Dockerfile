@@ -41,6 +41,8 @@ ENV MONGODB_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/mongodb-${MONGOD
 #注意添加数据卷 `volumes` 的问题
 #不太适合将所有的PHP文件都由本地数据卷 然后映射到容器中，这样有个问题是当Dockerfile生成新的扩展文件，会被构建成功后的数据卷替换为宿主机的数据卷导致新构建的文件丢失
 
+#USER www-data
+
 #运行命令构建
 RUN apt-get update \
     && apt-get install -y curl \
