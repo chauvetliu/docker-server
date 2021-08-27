@@ -27,7 +27,7 @@ services:
           RACK_ENV: development
           SESSION_SECRET:
       networks:
-        lampnetwork:
+        local_network:
           ipv4_address: 172.19.0.2
 
     php74:
@@ -51,7 +51,7 @@ services:
       depends_on:
           - nginx121
       networks:
-        lampnetwork:
+        local_network:
           ipv4_address: 172.19.0.3
     
     redis625:
@@ -73,11 +73,11 @@ services:
       depends_on:
           - php74
       networks:
-        lampnetwork:
+        local_network:
           ipv4_address: 172.19.0.4
 
 networks:
-    lampnetwork:
+    local_network:
       ipam:
         driver: default
         config:
