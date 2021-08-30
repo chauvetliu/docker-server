@@ -75,6 +75,34 @@ services:
       networks:
         local_network:
           ipv4_address: 172.19.0.4
+
+     # rabbitmq394:
+    #   build:
+    #     context: server/rabbitmq/rabbitmq-3.9.4
+    #     dockerfile: Dockerfile
+    #     args:
+    #       RABBITMQ_VERSION: ${RABBITMQ_VERSION}
+    #       RABBITMQ_PATH: ${RABBITMQ_PATH}
+    #   ports:
+    #     - "4369:4369"
+    #     - "5671:5671"
+    #     - "5672:5672"
+    #     - "15691:15691"
+    #     - "15692:15692"
+    #     - "25672:25672"
+    #   container_name: "rabbitmq394"
+    #   restart: always
+    #   volumes:
+    #     - ${RABBITMQ_PATH}/conf.d/:/etc/rabbitmq/conf.d/:rw
+    #     - ${RABBITMQ_PATH}/data/rabbitmq/:/var/lib/rabbitmq/:rw
+    #   environment:
+    #     - RABBITMQ_DEFAULT_USER=guest
+    #     - RABBITMQ_DEFAULT_PASS=guest
+    #     - SET_CONTAINER_TIMEZONE=true
+    #     - CONTAINER_TIMEZONE=Asia/Shanghai
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.5      
           
 networks:
     local_network:

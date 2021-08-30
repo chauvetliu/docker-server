@@ -125,7 +125,7 @@ RUN apt-get update \
     cd /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-${AMQP_EXT_NAME}.ini; \
-    echo "extension="${AMQP_EXT_NAME}".so">${ZEND_EXTENSION_INI}/docker-php-ext-${AMQP_EXT_NAME}.ini; \
+    echo "extension=amqp.so">${ZEND_EXTENSION_INI}/docker-php-ext-${AMQP_EXT_NAME}.ini; \
     \
     \
     echo "清理缓存"; \
