@@ -118,6 +118,7 @@ RUN apt-get update \
     \
     \
     echo "安装rabbitmq 扩展"; \
+    apt-get install -y librabbitmq-dev \
 	wget -P /tmp/${AMQP_EXT_NAME} ${AMQP_ZEND_EXTENSION_DOWNLOAD_URL}; \
     tar zxvf /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}.tgz -C /tmp/${AMQP_EXT_NAME}; \
     cd /tmp/${AMQP_EXT_NAME} && mv package.xml ${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \
