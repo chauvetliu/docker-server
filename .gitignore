@@ -1,4 +1,5 @@
 .DS_Store
+server/test/*
 *.log
 htdocs/php/*
 htdocs/go/*

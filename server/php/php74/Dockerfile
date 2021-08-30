@@ -31,6 +31,16 @@ ENV REDIS_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/redis-${REDIS_EXT_
 ENV MONGODB_EXT_VERSION=1.10.0
 ENV MONGODB_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/mongodb-${MONGODB_EXT_VERSION}.tgz
 
+#APCU 扩展
+ENV APCU_EXT_VERSION=5.1.20
+ENV APCU_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/apcu-${APCU_EXT_VERSION}.tgz
+
+#amqp 扩展(rabbitmq)
+ENV AMQP_EXT_NAME=amqp
+ENV AMQP_EXT_VERSION=1.10.2
+ENV AMQP_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/amqp-${AMQP_EXT_VERSION}.tgz
+
+
 # rm -rf /var/lib/apt/lists/* 主要是减少最终镜像的大小。通常是可以减少21M以上。
 # 参考 https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#general-guidelines-and-recommendations
 
@@ -60,6 +70,7 @@ RUN apt-get update \
     && docker-php-ext-install exif \
     && docker-php-ext-install pcntl \
     && docker-php-ext-install pdo \
+    && docker-php-ext-install bcmath \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install opcache \
     && apt-get install -y --no-install-recommends \
@@ -74,25 +85,47 @@ RUN apt-get update \
     \
     \
     echo "安装Redis 扩展"; \
-	wget -P /tmp ${REDIS_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    tar zxvf /tmp/redis-${REDIS_EXT_VERSION}.tgz -C /tmp; \
-    cd /tmp && mv package.xml redis-${REDIS_EXT_VERSION}; \
-    rm -r /tmp/redis-${REDIS_EXT_VERSION}.tgz; \
-    cd /tmp/redis-${REDIS_EXT_VERSION}; \ 
+	wget -P /tmp/redis ${REDIS_ZEND_EXTENSION_DOWNLOAD_URL}; \
+    tar zxvf /tmp/redis/redis-${REDIS_EXT_VERSION}.tgz -C /tmp/redis; \
+    cd /tmp/redis && mv package.xml redis-${REDIS_EXT_VERSION}; \
+    rm -r /tmp/redis/redis-${REDIS_EXT_VERSION}.tgz; \
+    cd /tmp/redis/redis-${REDIS_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-redis.ini; \
     echo "extension=redis.so">${ZEND_EXTENSION_INI}/docker-php-ext-redis.ini; \
     \
     \
     echo "安装mongodb 扩展"; \
-	wget -P /tmp ${MONGODB_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    tar zxvf /tmp/mongodb-${MONGODB_EXT_VERSION}.tgz -C /tmp; \
-    cd /tmp && mv package.xml mongodb-${MONGODB_EXT_VERSION}; \
-    rm -r /tmp/mongodb-${MONGODB_EXT_VERSION}.tgz; \
-    cd /tmp/mongodb-${MONGODB_EXT_VERSION}; \ 
+	wget -P /tmp/mongodb ${MONGODB_ZEND_EXTENSION_DOWNLOAD_URL}; \
+    tar zxvf /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz -C /tmp/mongodb; \
+    cd /tmp/mongodb && mv package.xml mongodb-${MONGODB_EXT_VERSION}; \
+    rm -r /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz; \
+    cd /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-mongodb.ini; \
     echo "extension=mongodb.so">${ZEND_EXTENSION_INI}/docker-php-ext-mongodb.ini; \
+    \
+    \
+    echo "安装apcu 扩展"; \
+	wget -P /tmp/apcu ${APCU_ZEND_EXTENSION_DOWNLOAD_URL}; \
+    tar zxvf /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz -C /tmp/apcu; \
+    cd /tmp/apcu && mv package.xml apcu-${APCU_EXT_VERSION}; \
+    rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
+    cd /tmp/apcu/apcu-${APCU_EXT_VERSION}; \ 
+    phpize && ./configure && make && make install; \
+    cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-apcu.ini; \
+    echo "extension=apcu.so">${ZEND_EXTENSION_INI}/docker-php-ext-apcu.ini; \
+    \
+    \
+    echo "安装rabbitmq 扩展"; \
+	wget -P /tmp/${AMQP_EXT_NAME} ${AMQP_ZEND_EXTENSION_DOWNLOAD_URL}; \
+    tar zxvf /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}.tgz -C /tmp/${AMQP_EXT_NAME}; \
+    cd /tmp/${AMQP_EXT_NAME} && mv package.xml ${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \
+    rm -r /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}.tgz; \
+    cd /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \ 
+    phpize && ./configure && make && make install; \
+    cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-${AMQP_EXT_NAME}.ini; \
+    echo "extension="${AMQP_EXT_NAME}".so">${ZEND_EXTENSION_INI}/docker-php-ext-${AMQP_EXT_NAME}.ini; \
     \
     \
     echo "清理缓存"; \
