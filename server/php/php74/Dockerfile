@@ -159,7 +159,7 @@ RUN apt-get update \
 RUN mkdir -p ${PHP_WEBLOG_PATH} && chown -R www-data:www-data ${PHP_WEBLOG_PATH} && chmod -R 777 ${PHP_WEBLOG_PATH}
 
 #映射端口
-#EXPOSE 9000
+EXPOSE 9000
 
 #执行启动命令
 #CMD ["php-fpm"]
