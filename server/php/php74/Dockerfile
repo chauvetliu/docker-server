@@ -81,6 +81,8 @@ RUN apt-get update \
 				libc6-dev \
 				libssl-dev \
 				make \
+                vim \
+                apt-utils \
 	; \
     \
     \
@@ -88,7 +90,6 @@ RUN apt-get update \
 	wget -P /tmp/redis ${REDIS_ZEND_EXTENSION_DOWNLOAD_URL}; \
     tar zxvf /tmp/redis/redis-${REDIS_EXT_VERSION}.tgz -C /tmp/redis; \
     cd /tmp/redis && mv package.xml redis-${REDIS_EXT_VERSION}; \
-    rm -r /tmp/redis/redis-${REDIS_EXT_VERSION}.tgz; \
     cd /tmp/redis/redis-${REDIS_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-redis.ini; \
@@ -99,7 +100,7 @@ RUN apt-get update \
 	wget -P /tmp/mongodb ${MONGODB_ZEND_EXTENSION_DOWNLOAD_URL}; \
     tar zxvf /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz -C /tmp/mongodb; \
     cd /tmp/mongodb && mv package.xml mongodb-${MONGODB_EXT_VERSION}; \
-    rm -r /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz; \
+    #rm -r /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz; \
     cd /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-mongodb.ini; \
@@ -110,7 +111,7 @@ RUN apt-get update \
 	wget -P /tmp/apcu ${APCU_ZEND_EXTENSION_DOWNLOAD_URL}; \
     tar zxvf /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz -C /tmp/apcu; \
     cd /tmp/apcu && mv package.xml apcu-${APCU_EXT_VERSION}; \
-    rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
+    #rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
     cd /tmp/apcu/apcu-${APCU_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-apcu.ini; \
@@ -118,11 +119,11 @@ RUN apt-get update \
     \
     \
     echo "安装rabbitmq 扩展"; \
-    apt-get install -y librabbitmq-dev \
+    apt-get install -y librabbitmq-dev; \
+    apt-get install -y librabbitmq4; \
 	wget -P /tmp/${AMQP_EXT_NAME} ${AMQP_ZEND_EXTENSION_DOWNLOAD_URL}; \
     tar zxvf /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}.tgz -C /tmp/${AMQP_EXT_NAME}; \
     cd /tmp/${AMQP_EXT_NAME} && mv package.xml ${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \
-    rm -r /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}.tgz; \
     cd /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \ 
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-${AMQP_EXT_NAME}.ini; \
@@ -130,6 +131,7 @@ RUN apt-get update \
     \
     \
     echo "清理缓存"; \
+    #rm -r /tmp/*; \
     rm -rf /var/lib/apt/lists/*;
 
     #便携安装PHP扩展（可能会失败）
@@ -149,6 +151,9 @@ RUN apt-get update \
     # && docker-php-ext-configure opcache --enable-opcache \
     # && docker-php-ext-install opcache
 
+
+#创建和授权目录权限
+RUN mkdir -p /var/log/php && chown -R www-data:www-data /var/log/php
 
 #映射端口
 #EXPOSE 9000
