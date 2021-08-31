@@ -13,6 +13,9 @@ LABEL author="chauvetliu@163.com"
 #更改docker源
 #COPY sources.list /etc/apt/sources.list
 
+#日志目录
+ENV PHP_WEBLOG_PATH=/var/log/php
+
 #设置时区
 ENV TIME_ZONE=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
@@ -153,7 +156,7 @@ RUN apt-get update \
 
 
 #创建和授权目录权限
-RUN mkdir -p /var/log/php && chown -R www-data:www-data /var/log/php
+RUN mkdir -p ${PHP_WEBLOG_PATH} && chown -R www-data:www-data ${PHP_WEBLOG_PATH} && chmod -R 777 ${PHP_WEBLOG_PATH}
 
 #映射端口
 #EXPOSE 9000
