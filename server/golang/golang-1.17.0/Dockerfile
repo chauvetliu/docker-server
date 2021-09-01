@@ -1,8 +1,16 @@
 #
-# NOTE: THIS DOCKERFILE IS GENERATED VIA "apply-templates.sh"
+# Golang Dockerfile
+# author: chauvetliu@163.com
+# date: 2021-09-01
 #
-# PLEASE DO NOT EDIT IT DIRECTLY.
-#
+
+# 导入变量
+ARG GOLANG_VERSION
+ARG LOCALHOST_GOROOT
+ARG CONTAINER_GOPATH
+ARG LOCALHOST_GOPATH
+ARG GOLANG_DOWNLOAD_URL
+
 
 FROM buildpack-deps:buster-scm
 
@@ -119,7 +127,7 @@ RUN set -eux; \
 	\
 	go version
 
-ENV GOPATH /go
+ENV GOPATH ${CONTAINER_GOPATH}
 ENV PATH $GOPATH/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 WORKDIR $GOPATH

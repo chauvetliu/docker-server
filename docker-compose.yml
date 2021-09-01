@@ -108,9 +108,10 @@ services:
         context: server/golang/golang-1.17.0
         dockerfile: Dockerfile
         args:
-          GOROOT: ${GOROOT}
-          GOPATH: ${GOPATH}
           GOLANG_VERSION: ${GOLANG_VERSION}
+          LOCALHOST_GOROOT: ${LOCALHOST_GOROOT}
+          CONTAINER_GOPATH: ${CONTAINER_GOPATH}
+          LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
           GOLANG_DOWNLOAD_URL: ${GOLANG_DOWNLOAD_URL}
       ports: 
         - "8880:8880"
@@ -120,7 +121,7 @@ services:
       container_name: "go117"
       restart: always
       volumes:
-        - ${GOPATH}:/data/htdocs/go/:rw
+        - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
       networks:
         local_network:
           ipv4_address: 172.19.0.6
