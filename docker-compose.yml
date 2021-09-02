@@ -43,6 +43,7 @@ services:
       restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PHP_SITE_LOG_DIR}:/var/log/php/:rw
         - ${PWD}/server/php/php-7.4.22/php/php.ini:/usr/local/etc/php/php.ini:rw
         - ${PWD}/server/php/php-7.4.22/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
         - ${PWD}/server/php/php-7.4.22/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
@@ -75,7 +76,30 @@ services:
         local_network:
           ipv4_address: 172.19.0.4
 
-     # rabbitmq394:
+    go117:
+      build:
+        context: server/golang/golang-1.17.0
+        dockerfile: Dockerfile
+        args:
+          GOLANG_VERSION: ${GOLANG_VERSION}
+          LOCALHOST_GOROOT: ${LOCALHOST_GOROOT}
+          CONTAINER_GOPATH: ${CONTAINER_GOPATH}
+          LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
+          GOLANG_DOWNLOAD_URL: ${GOLANG_DOWNLOAD_URL}
+      ports: 
+        - "8880:8880"
+        - "8881:8881"
+        - "8882:8882"
+        - "8883:8883"
+      container_name: "go117"
+      restart: always
+      volumes:
+        - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
+      networks:
+        local_network:
+          ipv4_address: 172.19.0.5
+
+    # rabbitmq394:
     #   build:
     #     context: server/rabbitmq/rabbitmq-3.9.4
     #     dockerfile: Dockerfile
@@ -101,30 +125,8 @@ services:
     #     - CONTAINER_TIMEZONE=Asia/Shanghai
     #   networks:
     #     local_network:
-    #       ipv4_address: 172.19.0.5      
-    
-    go117:
-      build:
-        context: server/golang/golang-1.17.0
-        dockerfile: Dockerfile
-        args:
-          GOLANG_VERSION: ${GOLANG_VERSION}
-          LOCALHOST_GOROOT: ${LOCALHOST_GOROOT}
-          CONTAINER_GOPATH: ${CONTAINER_GOPATH}
-          LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
-          GOLANG_DOWNLOAD_URL: ${GOLANG_DOWNLOAD_URL}
-      ports: 
-        - "8880:8880"
-        - "8881:8881"
-        - "8882:8882"
-        - "8883:8883"
-      container_name: "go117"
-      restart: always
-      volumes:
-        - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
-      networks:
-        local_network:
-          ipv4_address: 172.19.0.6
+    #       ipv4_address: 172.19.0.6
+
 
 networks:
     local_network:
