@@ -5,6 +5,6 @@ htdocs/php/*
 htdocs/go/*
 htdocs/python/*
 dump.rdb
-
+other/*
 
 
