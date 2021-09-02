@@ -1,6 +1,8 @@
+#
 # PHP7.4 Dockerfile
-# chauvetliu@163.com
-# 2021-08-01
+# author: chauvetliu@163.com
+# date: 2021-08-01
+#
 
 ARG PHP74_PATH
 ARG PHP74_VERSION

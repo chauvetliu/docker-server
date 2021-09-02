@@ -31,7 +31,7 @@ services:
 
     php74:
       build:
-        context: server/php/php74
+        context: server/php/php-7.4.22
         dockerfile: Dockerfile
         args:
           PHP74_PATH: ${PHP74_PATH}
@@ -43,9 +43,9 @@ services:
       restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
-        - ${PWD}/server/php/php74/php/php.ini:/usr/local/etc/php/php.ini:rw
-        - ${PWD}/server/php/php74/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
-        - ${PWD}/server/php/php74/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+        - ${PWD}/server/php/php-7.4.22/php/php.ini:/usr/local/etc/php/php.ini:rw
+        - ${PWD}/server/php/php-7.4.22/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php-7.4.22/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
         - ${PWD}/logs/server-logs/php/php-7.4.22/php-fpm.log:/var/log/php/php-fpm.log:rw
       depends_on:
           - nginx121
