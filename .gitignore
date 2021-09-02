@@ -6,5 +6,5 @@ htdocs/go/*
 htdocs/python/*
 dump.rdb
 other/*
-
+logs/web-logs/*
 
