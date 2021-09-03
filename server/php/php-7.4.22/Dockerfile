@@ -88,6 +88,19 @@ RUN apt-get update \
 				make \
                 vim \
                 apt-utils \
+                \
+                autoconf \
+                file \
+                g++ \
+                gcc \
+                pkg-config \
+                xz-utils \
+                zlib1g-dev \
+                libmcrypt-dev \
+                libcurl4-openssl-dev \
+                libedit-dev \
+                libxml2-dev \
+                libtidy-dev \
 	; \
     \
     \
@@ -150,9 +163,6 @@ RUN apt-get update \
     # && pecl install redis-4.0.1 \
     # && docker-php-ext-enable redis \
 
-    # && pecl install memcached \
-    # && docker-php-ext-enable memcached \
-
     # && docker-php-ext-configure opcache --enable-opcache \
     # && docker-php-ext-install opcache
 
@@ -165,70 +175,3 @@ EXPOSE 9000
 
 #执行启动命令
 #CMD ["php-fpm"]
-
-
-##
-# 旧的扩展，不可用
-##
-# RUN apt-get update  && apt-get install -y \
-#         git \
-#         autoconf \
-#         dpkg-dev \
-#         file \
-#         g++ \
-#         gcc \
-#         libc-dev \
-#         make \
-#         pkg-config \
-#         re2c \
-#         ca-certificates \
-#         curl \
-#         xz-utils \
-#         --no-install-recommends \
-#         pkg-config \
-#         build-essential \
-#         zlib1g-dev \
-#         libmcrypt-dev \
-#         libcurl4-openssl-dev \
-#         libedit-dev \
-#         libsodium-dev \
-#         libsqlite3-dev \
-#         libssl-dev \
-#         libxml2-dev \
-#         libtidy-dev \
-#         libxslt1-dev \
-#         libfreetype6-dev \
-#         libjpeg62-turbo-dev \
-#         libpng-dev \
-#         libicu-dev \
-#         libmemcached-dev \
-#         libxslt-dev \
-#         libldap2-dev \
-#         libbz2-dev \
-#         libzip-dev \
-#         libenchant-dev \
-#         libsnmp-dev \
-#         snmp \
-#         libpspell-dev \
-#         freetds-dev \
-#     && docker-php-ext-install intl \
-#     && docker-php-ext-install zip \
-#     && docker-php-ext-install mbstring \
-#     && docker-php-ext-install opcache \
-#     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-#     && docker-php-ext-install -j$(nproc) gd \
-#     && docker-php-ext-install soap \
-#     && docker-php-ext-install wddx \
-#     && docker-php-ext-install xmlrpc \
-#     && docker-php-ext-install tidy \
-#     && docker-php-ext-install xsl \
-#     && docker-php-ext-install xml \
-#     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu \
-#     && docker-php-ext-install -j$(nproc) ldap \
-#     && docker-php-ext-install bz2 \
-#     && docker-php-ext-install tokenizer \
-#     && docker-php-ext-install -j$(nproc) snmp \
-#     && docker-php-ext-install -j$(nproc) pspell \
-#     && docker-php-ext-install -j$(nproc) enchant \
-#     && docker-php-ext-configure pdo_dblib --with-libdir=lib/x86_64-linux-gnu \
-#     && docker-php-ext-install -j$(nproc) pdo_dblib
