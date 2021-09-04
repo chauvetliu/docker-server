@@ -86,14 +86,12 @@ services:
           CONTAINER_GOPATH: ${CONTAINER_GOPATH}
           LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
       ports: 
-        - "8880:8880"
-        - "8881:8881"
-        - "8882:8882"
-        - "8883:8883"
+        - "8080:8080"
       container_name: "go117"
       restart: always
       volumes:
         - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
+      tty: true   
       networks:
         local_network:
           ipv4_address: 172.19.0.5
