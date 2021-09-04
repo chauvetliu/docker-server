@@ -86,7 +86,8 @@ services:
           CONTAINER_GOPATH: ${CONTAINER_GOPATH}
           LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
       ports: 
-        - "8080:8080"
+        - "8888:80"
+        - "8880:8080"
       container_name: "go117"
       restart: always
       volumes:
