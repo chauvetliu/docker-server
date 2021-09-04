@@ -4,6 +4,8 @@
 # date: 2021-09-01
 #
 
+FROM buildpack-deps:buster-scm
+
 # 导入变量
 ARG GOLANG_VERSION
 ARG LOCALHOST_GOROOT
@@ -11,8 +13,10 @@ ARG CONTAINER_GOPATH
 ARG LOCALHOST_GOPATH
 ARG GOLANG_DOWNLOAD_URL
 
+#设置环境
+ENV GOLANG_VERSION 1.17
+ENV PATH /usr/local/go/bin:$PATH
 
-FROM buildpack-deps:buster-scm
 
 # install cgo-related dependencies
 RUN set -eux; \
@@ -25,10 +29,6 @@ RUN set -eux; \
 		pkg-config \
 	; \
 	rm -rf /var/lib/apt/lists/*
-
-ENV PATH /usr/local/go/bin:$PATH
-
-ENV GOLANG_VERSION 1.17
 
 RUN set -eux; \
 	arch="$(dpkg --print-architecture)"; arch="${arch##*-}"; \
