@@ -1,9 +1,10 @@
 .DS_Store
+server/test/*
 *.log
 htdocs/php/*
 htdocs/go/*
 htdocs/python/*
 dump.rdb
-
-
+other/*
+logs/web-logs/*
 

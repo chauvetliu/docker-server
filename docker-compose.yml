@@ -10,7 +10,6 @@ services:
       ports: 
         - "80:80"
         - "8080:8080"
-        - "8888:8888"
       container_name: "nginx121"
       restart: always
       volumes: 
@@ -27,12 +26,12 @@ services:
           RACK_ENV: development
           SESSION_SECRET:
       networks:
-        lampnetwork:
+        local_network:
           ipv4_address: 172.19.0.2
 
     php74:
       build:
-        context: server/php/php74
+        context: server/php/php-7.4.22
         dockerfile: Dockerfile
         args:
           PHP74_PATH: ${PHP74_PATH}
@@ -44,14 +43,15 @@ services:
       restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
-        - ${PWD}/server/php/php74/php/php.ini:/usr/local/etc/php/php.ini:rw
-        - ${PWD}/server/php/php74/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
-        - ${PWD}/server/php/php74/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+        - ${PHP_SITE_LOG_DIR}:/var/log/php/:rw
+        - ${PWD}/server/php/php-7.4.22/php/php.ini:/usr/local/etc/php/php.ini:rw
+        - ${PWD}/server/php/php-7.4.22/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php-7.4.22/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
         - ${PWD}/logs/server-logs/php/php-7.4.22/php-fpm.log:/var/log/php/php-fpm.log:rw
       depends_on:
           - nginx121
       networks:
-        lampnetwork:
+        local_network:
           ipv4_address: 172.19.0.3
     
     redis625:
@@ -73,11 +73,62 @@ services:
       depends_on:
           - php74
       networks:
-        lampnetwork:
+        local_network:
           ipv4_address: 172.19.0.4
 
+    go117:
+      build:
+        context: server/golang/golang-1.17.0
+        dockerfile: Dockerfile
+        args:
+          GOLANG_VERSION: ${GOLANG_VERSION}
+          LOCALHOST_GOROOT: ${LOCALHOST_GOROOT}
+          CONTAINER_GOPATH: ${CONTAINER_GOPATH}
+          LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
+      ports: 
+        - "8880:8880"
+        - "8881:8881"
+        - "8882:8882"
+        - "8883:8883"
+      container_name: "go117"
+      restart: always
+      volumes:
+        - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
+      networks:
+        local_network:
+          ipv4_address: 172.19.0.5
+
+    # rabbitmq394:
+    #   build:
+    #     context: server/rabbitmq/rabbitmq-3.9.4
+    #     dockerfile: Dockerfile
+    #     args:
+    #       RABBITMQ_VERSION: ${RABBITMQ_VERSION}
+    #       RABBITMQ_PATH: ${RABBITMQ_PATH}
+    #   ports:
+    #     - "4369:4369"
+    #     - "5671:5671"
+    #     - "5672:5672"
+    #     - "15691:15691"
+    #     - "15692:15692"
+    #     - "25672:25672"
+    #   container_name: "rabbitmq394"
+    #   restart: always
+    #   volumes:
+    #     - ${RABBITMQ_PATH}/conf.d/:/etc/rabbitmq/conf.d/:rw
+    #     - ${RABBITMQ_PATH}/data/rabbitmq/:/var/lib/rabbitmq/:rw
+    #   environment:
+    #     - RABBITMQ_DEFAULT_USER=guest
+    #     - RABBITMQ_DEFAULT_PASS=guest
+    #     - SET_CONTAINER_TIMEZONE=true
+    #     - CONTAINER_TIMEZONE=Asia/Shanghai
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.6
+
+
 networks:
-    lampnetwork:
+    local_network:
       ipam:
         driver: default
         config:

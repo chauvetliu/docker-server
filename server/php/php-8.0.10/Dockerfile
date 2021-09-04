@@ -10,6 +10,9 @@ ARG PHP73_MONGODB
 
 #Digest: sha256:f2fa329837893e9d74f13b9cdedf6d222c996a55b6574a817c07eb4b1ee7b1da
 
+
+#docker pull php:8.0.9-fpm-alpine3.14
+
 #镜像信息
 FROM php:${PHP_VERSION}-fpm
 
