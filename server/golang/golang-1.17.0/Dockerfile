@@ -4,6 +4,13 @@
 # date: 2021-09-01
 #
 
+
+#hub
+#https://hub.docker.com/_/golang
+#https://github.com/docker-library/golang/tree/48e32c58a6abc052253fba899cea876740cab262
+#https://github.com/docker-library/golang/blob/48e32c58a6abc052253fba899cea876740cab262/1.17/buster/Dockerfile
+
+
 FROM buildpack-deps:buster-scm
 
 # 导入变量
