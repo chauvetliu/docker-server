@@ -1,2 +1,0 @@
-#PHP73 端口
-fastcgi_pass   php74:9000;

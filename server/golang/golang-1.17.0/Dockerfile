@@ -22,6 +22,7 @@ ARG GOLANG_DOWNLOAD_URL
 
 #设置环境
 ENV GOLANG_VERSION 1.17
+ENV GOROOT /usr/local/go
 ENV PATH /usr/local/go/bin:$PATH
 
 

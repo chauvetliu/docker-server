@@ -1,0 +1,2 @@
+#PHP56 端口
+fastcgi_pass   php56:9056;
