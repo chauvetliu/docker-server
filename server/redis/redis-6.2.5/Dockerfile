@@ -3,6 +3,7 @@
 # 2021-08-19
 
 ARG REDIS_VERSION
+ARG REDIS_PATH
 
 #FROM ubuntu:18.04
 FROM debian:buster-slim
@@ -54,8 +55,8 @@ RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
 
-#COPY docker-entrypoint.sh /usr/local/bin/
-#ENTRYPOINT ["docker-entrypoint.sh"]
+COPY ${REDIS_PATH}/docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 6379
 

@@ -4,7 +4,15 @@
 # date: 2021-09-01
 #
 
+ARG MONGODB_PATH
+ARG MONGODB_DATA
+ARG MONGODB_VERSION
+
 FROM ubuntu:focal
+
+#设置时区
+ENV TIME_ZONE=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
@@ -112,7 +120,7 @@ RUN mkdir -p /data/db /data/configdb \
 	&& chown -R mongodb:mongodb /data/db /data/configdb
 VOLUME /data/db /data/configdb
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY ${MONGODB_PATH}/docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 27017
