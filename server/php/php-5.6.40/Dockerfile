@@ -28,16 +28,16 @@ ENV ZEND_EXTENSION_SO=/usr/local/etc/zend_extension
 ENV ZEND_EXTENSION_INI=/usr/local/etc/php/conf.d
 
 #Redis PHP扩展下载地址，参考地址：https://pecl.php.net/package/redis
-ENV REDIS_EXT_VERSION=5.3.4
+ENV REDIS_EXT_VERSION=4.0.14
 ENV REDIS_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/redis-${REDIS_EXT_VERSION}.tgz
 
 #MongoDB PHP扩展下载地址，参考地址：https://pecl.php.net/package/mongodb
-ENV MONGODB_EXT_VERSION=1.10.0
-ENV MONGODB_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/mongodb-${MONGODB_EXT_VERSION}.tgz
+#ENV MONGODB_EXT_VERSION=1.10.0
+#ENV MONGODB_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/mongodb-${MONGODB_EXT_VERSION}.tgz
 
 #APCU 扩展
-ENV APCU_EXT_VERSION=5.1.20
-ENV APCU_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/apcu-${APCU_EXT_VERSION}.tgz
+#ENV APCU_EXT_VERSION=5.1.20
+#ENV APCU_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/apcu-${APCU_EXT_VERSION}.tgz
 
 #amqp 扩展(rabbitmq)
 ENV AMQP_EXT_NAME=amqp
@@ -49,8 +49,8 @@ ENV AMQP_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/amqp-${AMQP_EXT_VER
 # 参考 https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#general-guidelines-and-recommendations
 
 #设置 pear 和pecl 的 php_ini 这样系统扩展可以直接添加到php.ini
-#pear config-set php_ini /usr/local/etc/php.ini
-#pecl config-set php_ini /usr/local/etc/php.ini
+#pear config-set php_ini /usr/local/etc/php/php.ini
+#pecl config-set php_ini /usr/local/etc/php/php.ini
 
 #注意添加数据卷 `volumes` 的问题
 #不太适合将所有的PHP文件都由本地数据卷 然后映射到容器中，这样有个问题是当Dockerfile生成新的扩展文件，会被构建成功后的数据卷替换为宿主机的数据卷导致新构建的文件丢失
@@ -62,9 +62,10 @@ RUN apt-get update \
     && apt-get install -y curl \
     && apt-get install -y procps \
     && apt-get install -y telnet \
+    && apt-get install -y libtool \
     && apt-get install -y net-tools \
-    && apt-get install -y inetutils-ping \
     && apt-get install -y libpng-dev \
+    && apt-get install -y inetutils-ping \
     && apt-get install -y libfreetype6-dev \
     && apt-get install -y libjpeg62-turbo-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -113,26 +114,26 @@ RUN apt-get update \
     echo "extension=redis.so">${ZEND_EXTENSION_INI}/docker-php-ext-redis.ini; \
     \
     \
-    echo "安装mongodb 扩展"; \
-	wget -P /tmp/mongodb ${MONGODB_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    tar zxvf /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz -C /tmp/mongodb; \
-    cd /tmp/mongodb && mv package.xml mongodb-${MONGODB_EXT_VERSION}; \
-    #rm -r /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz; \
-    cd /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}; \ 
-    phpize && ./configure && make && make install; \
-    cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-mongodb.ini; \
-    echo "extension=mongodb.so">${ZEND_EXTENSION_INI}/docker-php-ext-mongodb.ini; \
-    \
-    \
-    echo "安装apcu 扩展"; \
-	wget -P /tmp/apcu ${APCU_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    tar zxvf /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz -C /tmp/apcu; \
-    cd /tmp/apcu && mv package.xml apcu-${APCU_EXT_VERSION}; \
-    #rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
-    cd /tmp/apcu/apcu-${APCU_EXT_VERSION}; \ 
-    phpize && ./configure && make && make install; \
-    cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-apcu.ini; \
-    echo "extension=apcu.so">${ZEND_EXTENSION_INI}/docker-php-ext-apcu.ini; \
+    # echo "安装mongodb 扩展"; \
+	# wget -P /tmp/mongodb ${MONGODB_ZEND_EXTENSION_DOWNLOAD_URL}; \
+    # tar zxvf /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz -C /tmp/mongodb; \
+    # cd /tmp/mongodb && mv package.xml mongodb-${MONGODB_EXT_VERSION}; \
+    # #rm -r /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz; \
+    # cd /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}; \ 
+    # phpize && ./configure && make && make install; \
+    # cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-mongodb.ini; \
+    # echo "extension=mongodb.so">${ZEND_EXTENSION_INI}/docker-php-ext-mongodb.ini; \
+    # \
+    # \
+    # echo "安装apcu 扩展"; \
+	# wget -P /tmp/apcu ${APCU_ZEND_EXTENSION_DOWNLOAD_URL}; \
+    # tar zxvf /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz -C /tmp/apcu; \
+    # cd /tmp/apcu && mv package.xml apcu-${APCU_EXT_VERSION}; \
+    # #rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
+    # cd /tmp/apcu/apcu-${APCU_EXT_VERSION}; \ 
+    # phpize && ./configure && make && make install; \
+    # cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-apcu.ini; \
+    # echo "extension=apcu.so">${ZEND_EXTENSION_INI}/docker-php-ext-apcu.ini; \
     \
     \
     echo "安装rabbitmq 扩展"; \
@@ -153,8 +154,8 @@ RUN apt-get update \
 
     #便携安装PHP扩展（可能会失败）
     # 必须设置 pear 和pecl 的 php_ini 这样使用pecl安装PHP扩展才可以直接添加到php.ini
-    # pear config-set php_ini /usr/local/etc/php.ini
-    # pecl config-set php_ini /usr/local/etc/php.ini
+    # pear config-set php_ini /usr/local/etc/php/php.ini
+    # pecl config-set php_ini /usr/local/etc/php/php.ini
     #
     # && pecl install mcrypt-1.0.1 \
     # & docker-php-ext-enable mcrypt \

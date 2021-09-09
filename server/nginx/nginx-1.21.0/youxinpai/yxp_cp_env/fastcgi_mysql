@@ -50,6 +50,12 @@ fastcgi_param  DB_XUSER_USER_W  xin;
 fastcgi_param  DB_XUSER_PASS_W  48sdf37EB7;
 fastcgi_param  DB_XUSER_NAME_W  'xin_user';
 
+fastcgi_param  DB_XIN_HOST  'rm-2ze0q80w59h4uyvx4rw.mysql.rds.aliyuncs.com';
+fastcgi_param  DB_XIN_PORT  '3306';
+fastcgi_param  DB_XIN_USER  'xin';
+fastcgi_param  DB_XIN_PASS  '48sdf37EB7';
+fastcgi_param  DB_XIN_NAME  'xin';
+
 fastcgi_param  DB_XIN_HOST_W  'rm-2ze0q80w59h4uyvx4rw.mysql.rds.aliyuncs.com';
 fastcgi_param  DB_XIN_PORT_W  '3306';
 fastcgi_param  DB_XIN_USER_W  'xin';
