@@ -23,6 +23,7 @@ ARG GOLANG_DOWNLOAD_URL
 #设置环境
 ENV GOLANG_VERSION 1.17
 ENV GOROOT /usr/local/go
+ENV GOPROXY https://goproxy.cn,direct
 ENV PATH /usr/local/go/bin:$PATH
 
 
@@ -137,5 +138,6 @@ RUN set -eux; \
 
 ENV GOPATH ${CONTAINER_GOPATH}
 ENV PATH $GOPATH/bin:$PATH
+ENV GO111MODULE=on
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 WORKDIR $GOPATH

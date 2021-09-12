@@ -28,7 +28,7 @@ ENV ZEND_EXTENSION_SO=/usr/local/etc/zend_extension
 ENV ZEND_EXTENSION_INI=/usr/local/etc/php/conf.d
 
 #Redis PHP扩展下载地址，参考地址：https://pecl.php.net/package/redis
-ENV REDIS_EXT_VERSION=4.0.14
+ENV REDIS_EXT_VERSION=4.3.0
 ENV REDIS_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/redis-${REDIS_EXT_VERSION}.tgz
 
 #MongoDB PHP扩展下载地址，参考地址：https://pecl.php.net/package/mongodb
@@ -101,6 +101,8 @@ RUN apt-get update \
                 libedit-dev \
                 libxml2-dev \
                 libtidy-dev \
+                librabbitmq-dev \
+                librabbitmq4 \
 	; \
     \
     \
@@ -114,31 +116,7 @@ RUN apt-get update \
     echo "extension=redis.so">${ZEND_EXTENSION_INI}/docker-php-ext-redis.ini; \
     \
     \
-    # echo "安装mongodb 扩展"; \
-	# wget -P /tmp/mongodb ${MONGODB_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    # tar zxvf /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz -C /tmp/mongodb; \
-    # cd /tmp/mongodb && mv package.xml mongodb-${MONGODB_EXT_VERSION}; \
-    # #rm -r /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}.tgz; \
-    # cd /tmp/mongodb/mongodb-${MONGODB_EXT_VERSION}; \ 
-    # phpize && ./configure && make && make install; \
-    # cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-mongodb.ini; \
-    # echo "extension=mongodb.so">${ZEND_EXTENSION_INI}/docker-php-ext-mongodb.ini; \
-    # \
-    # \
-    # echo "安装apcu 扩展"; \
-	# wget -P /tmp/apcu ${APCU_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    # tar zxvf /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz -C /tmp/apcu; \
-    # cd /tmp/apcu && mv package.xml apcu-${APCU_EXT_VERSION}; \
-    # #rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
-    # cd /tmp/apcu/apcu-${APCU_EXT_VERSION}; \ 
-    # phpize && ./configure && make && make install; \
-    # cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-apcu.ini; \
-    # echo "extension=apcu.so">${ZEND_EXTENSION_INI}/docker-php-ext-apcu.ini; \
-    \
-    \
     echo "安装rabbitmq 扩展"; \
-    apt-get install -y librabbitmq-dev; \
-    apt-get install -y librabbitmq4; \
 	wget -P /tmp/${AMQP_EXT_NAME} ${AMQP_ZEND_EXTENSION_DOWNLOAD_URL}; \
     tar zxvf /tmp/${AMQP_EXT_NAME}/${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}.tgz -C /tmp/${AMQP_EXT_NAME}; \
     cd /tmp/${AMQP_EXT_NAME} && mv package.xml ${AMQP_EXT_NAME}-${AMQP_EXT_VERSION}; \
@@ -168,10 +146,12 @@ RUN apt-get update \
 
 
 #创建和授权目录权限
-RUN mkdir -p ${PHP_WEBLOG_PATH} && chown -R www-data:www-data ${PHP_WEBLOG_PATH} && chmod -R 777 ${PHP_WEBLOG_PATH}
+RUN mkdir -p ${PHP_WEBLOG_PATH} \
+    && chown -R www-data:www-data ${PHP_WEBLOG_PATH} \
+    && chmod -R 777 ${PHP_WEBLOG_PATH};
 
 #映射端口
-EXPOSE 9056
+EXPOSE 9000
 
 #执行启动命令
 CMD ["php-fpm"]

@@ -2,8 +2,8 @@
 # chauvetliu@163.com
 # 2021-08-19
 
-ARG REDIS_VERSION
 ARG REDIS_PATH
+ARG REDIS_VERSION
 
 #FROM ubuntu:18.04
 FROM debian:buster-slim
@@ -12,7 +12,7 @@ LABEL author="chauvetliu@163.com"
 
 ENV REDIS_VERSION 6.2.5
 ENV REDIS_PACKAGE_PATH ./package/
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-6.2.5.tar.gz
+ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz
 ENV REDIS_DOWNLOAD_SHA 4b9a75709a1b74b3785e20a6c158cab94cf52298aa381eea947a678a60d551ae
 
 #创建用户权限
@@ -55,10 +55,9 @@ RUN mkdir /data && chown redis:redis /data
 VOLUME /data
 WORKDIR /data
 
-COPY ${REDIS_PATH}/docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
 
+#映射端口
 EXPOSE 6379
 
 #执行启动命令加载配置文件
-CMD ["redis-server","/usr/local/etc/redis.conf"]
+CMD ["redis-server"]
