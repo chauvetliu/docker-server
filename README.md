@@ -11,3 +11,7 @@
 
 #### 软件包地址
     1、Redis http://download.redis.io/releases/redis-6.2.5.tar.gz    
+    
+#### 其他信息
+    - chauvetliu@163.com
+    
