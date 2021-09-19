@@ -4,15 +4,15 @@
 # date: 2021-09-19
 #
 
-#docker pull php:8.1.0RC2-fpm-buster
-
-#镜像信息
-FROM php:8.1.0RC2-fpm-buster
-
 ARG PHP8_VERSION
 ARG PHP8_REDIS
 ARG PHP8_PATH
 ARG PHP8_MONGODB
+
+#docker pull php:8.1.0RC2-fpm-buster
+
+#镜像信息
+FROM php:8.1.0RC2-fpm-buster
 
 #DIGEST:sha256:223ef5f49c9032662b9e2c800e94dd54d39fda8e05dec4e16bf91676c1f7c4b0
 
@@ -41,18 +41,13 @@ ENV REDIS_EXT_VERSION=5.3.4
 ENV REDIS_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/redis-${REDIS_EXT_VERSION}.tgz
 
 #MongoDB PHP扩展下载地址，参考地址：https://pecl.php.net/package/mongodb
-ENV MONGODB_EXT_VERSION=1.10.0
+ENV MONGODB_EXT_VERSION=1.11.0alpha1
 ENV MONGODB_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/mongodb-${MONGODB_EXT_VERSION}.tgz
-
-#APCU 扩展
-ENV APCU_EXT_VERSION=5.1.20
-ENV APCU_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/apcu-${APCU_EXT_VERSION}.tgz
 
 #amqp 扩展(rabbitmq)
 ENV AMQP_EXT_NAME=amqp
-ENV AMQP_EXT_VERSION=1.10.2
+ENV AMQP_EXT_VERSION=1.11.0beta
 ENV AMQP_ZEND_EXTENSION_DOWNLOAD_URL=http://pecl.php.net/get/amqp-${AMQP_EXT_VERSION}.tgz
-
 
 # rm -rf /var/lib/apt/lists/* 主要是减少最终镜像的大小。通常是可以减少21M以上。
 # 参考 https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#general-guidelines-and-recommendations
@@ -131,17 +126,6 @@ RUN apt-get update \
     phpize && ./configure && make && make install; \
     cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-mongodb.ini; \
     echo "extension=mongodb.so">${ZEND_EXTENSION_INI}/docker-php-ext-mongodb.ini; \
-    \
-    \
-    echo "安装apcu 扩展"; \
-	wget -P /tmp/apcu ${APCU_ZEND_EXTENSION_DOWNLOAD_URL}; \
-    tar zxvf /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz -C /tmp/apcu; \
-    cd /tmp/apcu && mv package.xml apcu-${APCU_EXT_VERSION}; \
-    #rm -r /tmp/apcu/apcu-${APCU_EXT_VERSION}.tgz; \
-    cd /tmp/apcu/apcu-${APCU_EXT_VERSION}; \ 
-    phpize && ./configure && make && make install; \
-    cd ${ZEND_EXTENSION_INI} && touch docker-php-ext-apcu.ini; \
-    echo "extension=apcu.so">${ZEND_EXTENSION_INI}/docker-php-ext-apcu.ini; \
     \
     \
     echo "安装rabbitmq 扩展"; \

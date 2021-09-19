@@ -4,11 +4,11 @@
 # 2021-08-01
 #
 
-#镜像信息
-FROM nginx:${NGINX_VERSION}
-
 ARG NGINX_VERSION
 ARG NGINX_HTML
+
+#镜像信息
+FROM nginx:${NGINX_VERSION}
 
 #提前安装一些功能
 RUN apt-get update \

@@ -6,8 +6,6 @@
 
 FROM buildpack-deps:buster
 
-ARG PYTHON_PACKAGE
-
 # ensure local python is preferred over distribution python
 ENV PATH /usr/local/bin:$PATH
 
@@ -104,5 +102,10 @@ RUN set -ex; \
 			\( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
 		\) -exec rm -rf '{}' +; \
 	rm -f get-pip.py
+
+# pip 安装扩展
+RUN pip install requests; \
+	pip install image; \
+	
 
 CMD ["python3"]

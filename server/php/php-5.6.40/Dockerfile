@@ -4,10 +4,10 @@
 # date: 2021-09-08
 #
 
+ARG PHP56_VERSION
+
 #镜像信息
 FROM php:${PHP56_VERSION}-fpm
-
-ARG PHP56_VERSION
 
 LABEL author="chauvetliu@163.com"
 
