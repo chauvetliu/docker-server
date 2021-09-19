@@ -4,11 +4,11 @@
 # date: 2021-08-01
 #
 
-ARG PHP74_PATH
-ARG PHP74_VERSION
-
 #镜像信息
 FROM php:${PHP74_VERSION}-fpm
+
+ARG PHP74_PATH
+ARG PHP74_VERSION
 
 LABEL author="chauvetliu@163.com"
 

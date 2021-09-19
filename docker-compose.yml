@@ -130,11 +130,12 @@ services:
         context: server/python/python-3.10.0
         dockerfile: Dockerfile
         args:
-          PYTHON_VERSION: ${PYTHON_VERSION}
           PYTHON_PATH: ${PYTHON_PATH}
+          PYTHON_VERSION: ${PYTHON_VERSION}
+          PYTHON_PACKAGE: ${PYTHON_PACKAGE}
           PYTHON_WWW_PATH: ${PYTHON_WWW_PATH}
       ports: 
-        - "8999:8999"
+        - "8088:80"
       container_name: "python310"
       restart: always
       volumes:

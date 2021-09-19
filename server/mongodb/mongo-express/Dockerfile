@@ -4,11 +4,11 @@
 # date: 2021-09-09
 #
 
-ARG MONGODB_EXPRESS_PATH
-
 # https://nodejs.org/en/about/releases/
 # https://github.com/nodejs/Release#readme
 FROM node:12-alpine3.11
+
+ARG MONGODB_EXPRESS_PATH
 
 RUN apk add --no-cache bash tini
 

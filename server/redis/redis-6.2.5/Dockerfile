@@ -2,11 +2,11 @@
 # chauvetliu@163.com
 # 2021-08-19
 
-ARG REDIS_PATH
-ARG REDIS_VERSION
-
 #FROM ubuntu:18.04
 FROM debian:buster-slim
+
+ARG REDIS_PATH
+ARG REDIS_VERSION
 
 LABEL author="chauvetliu@163.com"
 
