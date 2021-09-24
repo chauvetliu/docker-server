@@ -105,7 +105,7 @@ RUN set -ex; \
 
 # pip 安装扩展
 RUN pip install requests; \
-	pip install image; \
+	pip install image;
 	
 
 CMD ["python3"]

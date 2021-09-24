@@ -7,4 +7,4 @@ htdocs/python/*
 dump.rdb
 other/*
 logs/web-logs/*
-
+data/mongodb/*

@@ -30,11 +30,12 @@ RUN set -eux; \
 	npm install mongo-express@$MONGO_EXPRESS; \
 	apk del --no-network .me-install-deps
 
-COPY ${MONGODB_EXPRESS_PATH}/docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
 
 WORKDIR /node_modules/mongo-express
 
-RUN cp ${MONGODB_EXPRESS_PATH}/conf/config.js config.js
+RUN cp conf/config.js config.js
 
 ENTRYPOINT [ "tini", "--", "/docker-entrypoint.sh"]
+
 CMD ["mongo-express"]
