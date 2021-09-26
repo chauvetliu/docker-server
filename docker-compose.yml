@@ -171,7 +171,33 @@ services:
         local_network:
           ipv4_address: 172.19.0.70
 
+    mysql-8.0.26_1:
+      build:
+        context: server/mysql/mysql-8.0.26_1
+        dockerfile: Dockerfile
+        args:
+          MYSQL_PATH: ${MYSQL_PATH}
+          MYSQL_VERSION: ${MYSQL_VERSION}
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      ports:
+        - "123306:3306"
+        - "13306:13306"
+        - "23306:23306"
+        - "33306:33306"
+        - "33060:33060"
+      container_name: "mysql-8.0.26_1"
+      restart: always
+      volumes:
+        - ${PWD}/config:/etc/mysql/:rw
+        - ${MYSQL_DATA}/mysql-8.0.26_1/mysql:/var/lib/mysql:rw
+      environment:
+        - TZ=Asia/Shanghai
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      networks:
+        local_network:
+          ipv4_address: 172.19.0.80
     
+
     # rabbitmq394:
     #   build:
     #     context: server/rabbitmq/rabbitmq-3.9.4
@@ -198,7 +224,7 @@ services:
     #     - CONTAINER_TIMEZONE=Asia/Shanghai
     #   networks:
     #     local_network:
-    #       ipv4_address: 172.19.0.80
+    #       ipv4_address: 172.19.0.90
 
     # mongodb502:
     #   build:
@@ -225,7 +251,7 @@ services:
     #     - MONGO_INITDB_ROOT_PASSWORD=liuxiaowei
     #   networks:
     #     local_network:
-    #       ipv4_address: 172.19.0.90
+    #       ipv4_address: 172.19.0.100
 
     # mongodb502-express:
     #   build:
@@ -244,7 +270,7 @@ services:
     #     ME_CONFIG_MONGODB_ADMINPASSWORD: liuxiaowei
     #   networks:
     #     local_network:
-    #       ipv4_address: 172.19.0.91
+    #       ipv4_address: 172.19.0.101
 
 networks:
     local_network:
