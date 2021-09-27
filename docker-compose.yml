@@ -190,6 +190,7 @@ services:
       volumes:
         - ${PWD}/config:/etc/mysql/:rw
         - ${MYSQL_DATA}/mysql-8.0.26_1/mysql:/var/lib/mysql:rw
+      tty: true  
       environment:
         - TZ=Asia/Shanghai
         - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
