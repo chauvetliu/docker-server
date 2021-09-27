@@ -96,4 +96,4 @@ COPY docker-entrypoint.sh /usr/local/bin/
 RUN mkdir -p /var/lib/mysql-files && chown -R mysql:mysql /var/lib/mysql-files && chmod -R 777 /var/lib/mysql-files
 
 EXPOSE 3306 33060
-CMD ["mysqld"]
+#CMD ["mysqld"]
