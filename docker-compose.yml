@@ -180,7 +180,7 @@ services:
           MYSQL_VERSION: ${MYSQL_VERSION}
           MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       ports:
-        - "123306:3306"
+        - "3306:3306"
         - "13306:13306"
         - "23306:23306"
         - "33306:33306"
