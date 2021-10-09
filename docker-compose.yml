@@ -7,12 +7,12 @@ services:
         args:
           NGINX_VERSION: ${NGINX_VERSION}
           NGINX_HTML: ${NGINX_HTML}
-      ports: 
+      ports:
         - "80:80"
         - "8080:8080"
       container_name: "nginx121"
       restart: always
-      volumes: 
+      volumes:
         - ${PHP74_WWW_PATH}:/data/htdocs/php/:rw
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
         - ${PWD}/logs/server-logs/nginx/nginx-1.21.0/:/var/log/nginx/:rw
@@ -38,7 +38,7 @@ services:
           PHP56_VERSION: ${PHP56_VERSION}
           PHP56_WWW_PATH: ${PHP56_WWW_PATH}
           REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
-      ports: 
+      ports:
         - "9056:9000"
       container_name: "php56"
       restart: always
@@ -49,7 +49,7 @@ services:
         - ${PWD}/server/php/php-5.6.40/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
         - ${PWD}/server/php/php-5.6.40/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
         - ${PWD}/logs/server-logs/php/php-5.6.40/php-fpm.log:/var/log/php/php-fpm.log:rw
-      tty: true  
+      tty: true
       depends_on:
           - nginx121
       networks:
@@ -65,7 +65,7 @@ services:
           PHP74_VERSION: ${PHP74_VERSION}
           PHP74_WWW_PATH: ${PHP74_WWW_PATH}
           REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
-      ports: 
+      ports:
         - "9000:9000"
       container_name: "php74"
       restart: always
@@ -90,7 +90,7 @@ services:
         args:
           PHP8_WWW_PATH: ${PHP8_WWW_PATH}
           PHP8_VERSION: ${PHP8_VERSION}
-      ports: 
+      ports:
         - "9081:9000"
       container_name: "php81"
       restart: always
@@ -101,7 +101,7 @@ services:
         - ${PWD}/server/php/php-8.1.0/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
         - ${PWD}/server/php/php-8.1.0/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
         - ${PWD}/logs/server-logs/php/php-8.1.0/php-fpm.log:/var/log/php/php-fpm.log:rw
-      tty: true  
+      tty: true
       depends_on:
           - nginx121
       networks:
@@ -117,13 +117,13 @@ services:
           LOCALHOST_GOROOT: ${LOCALHOST_GOROOT}
           CONTAINER_GOPATH: ${CONTAINER_GOPATH}
           LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
-      ports: 
+      ports:
         - "8888:8888"
       container_name: "go117"
       restart: always
       volumes:
         - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
-      tty: true   
+      tty: true  
       networks:
         local_network:
           ipv4_address: 172.19.0.50
@@ -137,13 +137,13 @@ services:
           PYTHON_VERSION: ${PYTHON_VERSION}
           PYTHON_PACKAGE: ${PYTHON_PACKAGE}
           PYTHON_WWW_PATH: ${PYTHON_WWW_PATH}
-      ports: 
+      ports:
         - "8088:80"
       container_name: "python310"
       restart: always
       volumes:
         - ${PYTHON_WWW_PATH}:/data/htdocs/python/:rw
-      tty: true   
+      tty: true
       networks:
         local_network:
           ipv4_address: 172.19.0.60
@@ -164,7 +164,7 @@ services:
         - ${PWD}/logs/server-logs/redis/:/var/log/redis/:rw
         - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
         - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
-      tty: true   
+      tty: true
       depends_on:
           - php74
       networks:
@@ -190,7 +190,7 @@ services:
     #   volumes:
     #     - ${PWD}/config:/etc/mysql/:rw
     #     - ${MYSQL_DATA}/mysql-8.0.26_1/mysql:/var/lib/mysql:rw
-    #   tty: true  
+    #   tty: true
     #   environment:
     #     - TZ=Asia/Shanghai
     #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
