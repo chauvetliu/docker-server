@@ -148,20 +148,20 @@ services:
         local_network:
           ipv4_address: 172.19.0.60
 
-    redis625:
+    redis625-master:
       build:
-        context: server/redis/redis-6.2.5
+        context: server/redis/redis-6.2.5_1
         dockerfile: Dockerfile
         args:
           REDIS_PATH: ${REDIS_PATH}
           REDIS_VERSION: ${REDIS_VERSION}
       ports:
         - "6379:6379"
-      container_name: "redis625"
+      container_name: "redis625-master"
       restart: always
       volumes:
-        - ${REDIS_DATA}/data/:/data/:rw
-        - ${PWD}/logs/server-logs/redis/:/var/log/redis/:rw
+        - ${REDIS_DATA}/data_master/:/data/:rw
+        - ${PWD}/logs/server-logs/redis/redis625-master/:/var/log/redis/:rw
         - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
         - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
       tty: true
@@ -170,6 +170,29 @@ services:
       networks:
         local_network:
           ipv4_address: 172.19.0.70
+      
+    redis625-salve-1:
+      build:
+        context: server/redis/redis-6.2.5_2
+        dockerfile: Dockerfile
+        args:
+          REDIS_PATH: ${REDIS_PATH}
+          REDIS_VERSION: ${REDIS_VERSION}
+      ports:
+        - "6379:6379"
+      container_name: "redis625-salve-1"
+      restart: always
+      volumes:
+        - ${REDIS_DATA}/data_salve_1/:/data/:rw
+        - ${PWD}/logs/server-logs/redis/redis625-salve-1/:/var/log/redis/:rw
+        - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+        - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
+      tty: true
+      depends_on:
+          - php74
+      networks:
+        local_network:
+          ipv4_address: 172.19.0.71  
 
     # mysql-8.0.26_1:
     #   build:

@@ -4,6 +4,7 @@ server/test/*
 htdocs/php/*
 htdocs/go/*
 htdocs/python/*
+htdocs/java/*
 dump.rdb
 other/*
 logs/web-logs/*
