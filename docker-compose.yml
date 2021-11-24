@@ -83,30 +83,30 @@ services:
         local_network:
           ipv4_address: 172.19.0.30
 
-    php81:
-      build:
-        context: server/php/php-8.1.0
-        dockerfile: Dockerfile
-        args:
-          PHP8_WWW_PATH: ${PHP8_WWW_PATH}
-          PHP8_VERSION: ${PHP8_VERSION}
-      ports:
-        - "9081:9000"
-      container_name: "php81"
-      restart: always
-      volumes:
-        - ${PHP8_WWW_PATH}:/data/htdocs/php/:rw
-        - ${PHP8_SITE_LOG_DIR}:/var/log/php/:rw
-        - ${PWD}/server/php/php-8.1.0/php/php.ini:/usr/local/etc/php/php.ini:rw
-        - ${PWD}/server/php/php-8.1.0/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
-        - ${PWD}/server/php/php-8.1.0/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
-        - ${PWD}/logs/server-logs/php/php-8.1.0/php-fpm.log:/var/log/php/php-fpm.log:rw
-      tty: true
-      depends_on:
-          - nginx121
-      networks:
-        local_network:
-          ipv4_address: 172.19.0.40
+    # php81:
+    #   build:
+    #     context: server/php/php-8.1.0
+    #     dockerfile: Dockerfile
+    #     args:
+    #       PHP8_WWW_PATH: ${PHP8_WWW_PATH}
+    #       PHP8_VERSION: ${PHP8_VERSION}
+    #   ports:
+    #     - "9081:9000"
+    #   container_name: "php81"
+    #   restart: always
+    #   volumes:
+    #     - ${PHP8_WWW_PATH}:/data/htdocs/php/:rw
+    #     - ${PHP8_SITE_LOG_DIR}:/var/log/php/:rw
+    #     - ${PWD}/server/php/php-8.1.0/php/php.ini:/usr/local/etc/php/php.ini:rw
+    #     - ${PWD}/server/php/php-8.1.0/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+    #     - ${PWD}/server/php/php-8.1.0/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+    #     - ${PWD}/logs/server-logs/php/php-8.1.0/php-fpm.log:/var/log/php/php-fpm.log:rw
+    #   tty: true
+    #   depends_on:
+    #       - nginx121
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.40
 
     go117:
       build:
@@ -153,7 +153,7 @@ services:
         context: server/redis/redis-6.2.5_1
         dockerfile: Dockerfile
         args:
-          REDIS_PATH: ${REDIS_PATH}
+          REDIS_PATH: ${REDIS_ONE_PATH}
           REDIS_VERSION: ${REDIS_VERSION}
       ports:
         - "6379:6379"
@@ -162,8 +162,8 @@ services:
       volumes:
         - ${REDIS_DATA}/data_master/:/data/:rw
         - ${PWD}/logs/server-logs/redis/redis625-master/:/var/log/redis/:rw
-        - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
-        - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
+        - ${REDIS_ONE_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+        - ${REDIS_ONE_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
       tty: true
       depends_on:
           - php74
@@ -176,17 +176,17 @@ services:
         context: server/redis/redis-6.2.5_2
         dockerfile: Dockerfile
         args:
-          REDIS_PATH: ${REDIS_PATH}
+          REDIS_PATH: ${REDIS_TWO_PATH}
           REDIS_VERSION: ${REDIS_VERSION}
       ports:
-        - "6379:6379"
+        - "6380:6379"
       container_name: "redis625-salve-1"
       restart: always
       volumes:
         - ${REDIS_DATA}/data_salve_1/:/data/:rw
         - ${PWD}/logs/server-logs/redis/redis625-salve-1/:/var/log/redis/:rw
-        - ${REDIS_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
-        - ${REDIS_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
+        - ${REDIS_TWO_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+        - ${REDIS_TWO_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
       tty: true
       depends_on:
           - php74

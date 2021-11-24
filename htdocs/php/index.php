@@ -1,5 +1,25 @@
 <?php
 
+$tab=4;
+$exception_status=15;
+$stage = [1=>1, 2=>2, 3=>4, 4=>8];
+
+
+
+var_dump( 10 & 2);die;
+
+var_dump($exception_status & $stage[$tab]);
+die;
+
+if( ($exception_status & $stage[$tab]) != $stage[$tab]) {//无异常
+    echo  'llliuxxxwwww';
+}
+
+
+echo "ookkk";
+die;
+
+
 
 
 
