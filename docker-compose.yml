@@ -20,6 +20,7 @@ services:
         - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/youxinpai:/etc/nginx/youxinpai/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/fastcgi_param/:/etc/nginx/fastcgi_param/:rw
       cap_add:
           - ALL
       environment:
