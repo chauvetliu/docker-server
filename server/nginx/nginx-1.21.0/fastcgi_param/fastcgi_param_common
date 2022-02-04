@@ -1,0 +1,7 @@
+
+#廊坊项目数据库信息 2022-02-01
+fastcgi_param lf_db_dbhost 123.56.145.196;
+fastcgi_param lf_db_dbhost_port 13506;
+fastcgi_param lf_db_dbuser luyuanshichen;
+fastcgi_param lf_db_dbpass AL8g3X1x9Wm@;
+fastcgi_param lf_db_dbname langfang;
