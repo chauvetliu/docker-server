@@ -1,5 +1,15 @@
 <?php
 
+
+// echo date("m-d",39219742);die;
+
+echo 1643903999 - 1430409600;die;
+
+
+var_dump($_SERVER['SERVER_NAME'].':'.$_SERVER["SERVER_PORT"]);die;
+
+
+
 $tab=4;
 $exception_status=15;
 $stage = [1=>1, 2=>2, 3=>4, 4=>8];
