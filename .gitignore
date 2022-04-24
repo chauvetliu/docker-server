@@ -11,3 +11,5 @@ logs/web-logs/*
 data/mongodb/*
 fastcgi_param/*
 data/*
+server/nginx/nginx-1.21.0/conf.d/*
+server/nginx/nginx-1.21.0/fastcgi_param_common/*
