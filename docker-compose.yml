@@ -9,22 +9,18 @@ services:
           NGINX_HTML: ${NGINX_HTML}
       ports:
         - "80:80"
-        - "9090:9090"
-        - "9091:9091"
-        - "9092:9092"
-        - "9093:9093"
-        - "9094:9094"
-        - "9095:9095"
-        - "9096:9096"
+        - "8080:8080"
       container_name: "nginx121"
       restart: always
       volumes:
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PHP74_WWW_PATH}:/data/htdocs/php/:rw
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
         - ${PWD}/logs/server-logs/nginx/nginx-1.21.0/:/var/log/nginx/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/nginx.conf:/etc/nginx/nginx.conf:rw
         - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/youxinpai:/etc/nginx/youxinpai/:rw
         - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/fastcgi_param/:/etc/nginx/fastcgi_param/:rw
       cap_add:
           - ALL
       environment:
@@ -32,35 +28,34 @@ services:
           SESSION_SECRET:
       networks:
         local_network:
-          ipv4_address: 172.172.0.10
+          ipv4_address: 172.19.0.10
     
-    php73:
+    php56:
       build:
-        context: server/php/php-7.3.33
+        context: server/php/php-5.6.40
         dockerfile: Dockerfile
         args:
-          PHP73_PATH: ${PHP73_PATH}
-          PHP73_VERSION: ${PHP73_VERSION}
-          PHP_WWW_PATH: ${PHP_WWW_PATH}
+          PHP56_PATH: ${PHP56_PATH}
+          PHP56_VERSION: ${PHP56_VERSION}
+          PHP56_WWW_PATH: ${PHP56_WWW_PATH}
           REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
       ports:
-        - "9001:9000"
-      container_name: "php73"
+        - "9056:9000"
+      container_name: "php56"
       restart: always
       volumes:
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
-        - ${PHP73_SITE_LOG_DIR}:/var/log/php/web:rw
-        - ${PWD}/server/php/php-7.3.33/php/php.ini:/usr/local/etc/php/php.ini:rw
-        - ${PWD}/server/php/php-7.3.33/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
-        - ${PWD}/server/php/php-7.3.33/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
-        - ${PWD}/logs/server-logs/php/php-7.3.33/php-fpm.log:/var/log/php/php-fpm.log:rw
+        - ${PHP56_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PHP56_SITE_LOG_DIR}:/var/log/php/web:rw
+        - ${PWD}/server/php/php-5.6.40/php/php.ini:/usr/local/etc/php/php.ini:rw
+        - ${PWD}/server/php/php-5.6.40/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php-5.6.40/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+        - ${PWD}/logs/server-logs/php/php-5.6.40/php-fpm.log:/var/log/php/php-fpm.log:rw
       tty: true
       depends_on:
           - nginx121
       networks:
         local_network:
-          ipv4_address: 172.172.0.20
-
+          ipv4_address: 172.19.0.20
 
     php74:
       build:
@@ -69,14 +64,14 @@ services:
         args:
           PHP74_PATH: ${PHP74_PATH}
           PHP74_VERSION: ${PHP74_VERSION}
-          PHP_WWW_PATH: ${PHP_WWW_PATH}
+          PHP74_WWW_PATH: ${PHP74_WWW_PATH}
           REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
       ports:
-        - "9002:9000"
+        - "9000:9000"
       container_name: "php74"
       restart: always
       volumes:
-        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PHP74_WWW_PATH}:/data/htdocs/php/:rw
         - ${PHP74_SITE_LOG_DIR}:/var/log/php/web:rw
         - ${PWD}/server/php/php-7.4.22/php/php.ini:/usr/local/etc/php/php.ini:rw
         - ${PWD}/server/php/php-7.4.22/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
@@ -87,11 +82,224 @@ services:
           - nginx121
       networks:
         local_network:
-          ipv4_address: 172.172.0.30
+          ipv4_address: 172.19.0.30
+
+    # php81:
+    #   build:
+    #     context: server/php/php-8.1.0
+    #     dockerfile: Dockerfile
+    #     args:
+    #       PHP8_WWW_PATH: ${PHP8_WWW_PATH}
+    #       PHP8_VERSION: ${PHP8_VERSION}
+    #   ports:
+    #     - "9081:9000"
+    #   container_name: "php81"
+    #   restart: always
+    #   volumes:
+    #     - ${PHP8_WWW_PATH}:/data/htdocs/php/:rw
+    #     - ${PHP8_SITE_LOG_DIR}:/var/log/php/:rw
+    #     - ${PWD}/server/php/php-8.1.0/php/php.ini:/usr/local/etc/php/php.ini:rw
+    #     - ${PWD}/server/php/php-8.1.0/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+    #     - ${PWD}/server/php/php-8.1.0/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+    #     - ${PWD}/logs/server-logs/php/php-8.1.0/php-fpm.log:/var/log/php/php-fpm.log:rw
+    #   tty: true
+    #   depends_on:
+    #       - nginx121
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.40
+
+    # go117:
+    #   build:
+    #     context: server/golang/golang-1.17.0
+    #     dockerfile: Dockerfile
+    #     args:
+    #       GOLANG_VERSION: ${GOLANG_VERSION}
+    #       LOCALHOST_GOROOT: ${LOCALHOST_GOROOT}
+    #       CONTAINER_GOPATH: ${CONTAINER_GOPATH}
+    #       LOCALHOST_GOPATH: ${LOCALHOST_GOPATH}
+    #   ports:
+    #     - "8888:8888"
+    #   container_name: "go117"
+    #   restart: always
+    #   volumes:
+    #     - ${LOCALHOST_GOPATH}:${CONTAINER_GOPATH}:rw
+    #   tty: true  
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.50
+
+    # python310:
+    #   build:
+    #     context: server/python/python-3.10.0
+    #     dockerfile: Dockerfile
+    #     args:
+    #       PYTHON_PATH: ${PYTHON_PATH}
+    #       PYTHON_VERSION: ${PYTHON_VERSION}
+    #       PYTHON_PACKAGE: ${PYTHON_PACKAGE}
+    #       PYTHON_WWW_PATH: ${PYTHON_WWW_PATH}
+    #   ports:
+    #     - "8088:80"
+    #   container_name: "python310"
+    #   restart: always
+    #   volumes:
+    #     - ${PYTHON_WWW_PATH}:/data/htdocs/python/:rw
+    #   tty: true
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.60
+
+    redis625-master:
+      build:
+        context: server/redis/redis-6.2.5_1
+        dockerfile: Dockerfile
+        args:
+          REDIS_PATH: ${REDIS_ONE_PATH}
+          REDIS_VERSION: ${REDIS_VERSION}
+      ports:
+        - "6379:6379"
+      container_name: "redis625-master"
+      restart: always
+      volumes:
+        - ${REDIS_DATA}/data_master/:/data/:rw
+        - ${PWD}/logs/server-logs/redis/redis625-master/:/var/log/redis/:rw
+        - ${REDIS_ONE_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+        - ${REDIS_ONE_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
+      tty: true
+      depends_on:
+          - php74
+      networks:
+        local_network:
+          ipv4_address: 172.19.0.70
+      
+    # redis625-salve-1:
+    #   build:
+    #     context: server/redis/redis-6.2.5_2
+    #     dockerfile: Dockerfile
+    #     args:
+    #       REDIS_PATH: ${REDIS_TWO_PATH}
+    #       REDIS_VERSION: ${REDIS_VERSION}
+    #   ports:
+    #     - "6380:6379"
+    #   container_name: "redis625-salve-1"
+    #   restart: always
+    #   volumes:
+    #     - ${REDIS_DATA}/data_salve_1/:/data/:rw
+    #     - ${PWD}/logs/server-logs/redis/redis625-salve-1/:/var/log/redis/:rw
+    #     - ${REDIS_TWO_PATH}/redis.conf:/usr/local/etc/redis.conf:rw
+    #     - ${REDIS_TWO_PATH}/redis-sentinel.conf:/usr/local/etc/redis-sentinel.conf:rw
+    #   tty: true
+    #   depends_on:
+    #       - php74
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.71  
+
+    # mysql-8.0.26_1:
+    #   build:
+    #     context: server/mysql/mysql-8.0.26_1
+    #     dockerfile: Dockerfile
+    #     args:
+    #       MYSQL_PATH: ${MYSQL_PATH}
+    #       MYSQL_VERSION: ${MYSQL_VERSION}
+    #       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    #   ports:
+    #     - "3306:3306"
+    #     - "13306:13306"
+    #     - "23306:23306"
+    #     - "33306:33306"
+    #     - "33060:33060"
+    #   container_name: "mysql-8.0.26_1"
+    #   restart: always
+    #   volumes:
+    #     - ${PWD}/config:/etc/mysql/:rw
+    #     - ${MYSQL_DATA}/mysql-8.0.26_1/mysql:/var/lib/mysql:rw
+    #   tty: true
+    #   environment:
+    #     - TZ=Asia/Shanghai
+    #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.80
+    
+
+    # rabbitmq394:
+    #   build:
+    #     context: server/rabbitmq/rabbitmq-3.9.4
+    #     dockerfile: Dockerfile
+    #     args:
+    #       RABBITMQ_VERSION: ${RABBITMQ_VERSION}
+    #       RABBITMQ_PATH: ${RABBITMQ_PATH}
+    #   ports:
+    #     - "4369:4369"
+    #     - "5671:5671"
+    #     - "5672:5672"
+    #     - "15691:15691"
+    #     - "15692:15692"
+    #     - "25672:25672"
+    #   container_name: "rabbitmq394"
+    #   restart: always
+    #   volumes:
+    #     - ${RABBITMQ_PATH}/conf.d/:/etc/rabbitmq/conf.d/:rw
+    #     - ${RABBITMQ_PATH}/data/rabbitmq/:/var/lib/rabbitmq/:rw
+    #   environment:
+    #     - RABBITMQ_DEFAULT_USER=guest
+    #     - RABBITMQ_DEFAULT_PASS=guest
+    #     - SET_CONTAINER_TIMEZONE=true
+    #     - CONTAINER_TIMEZONE=Asia/Shanghai
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.90
+
+    # mongodb502:
+    #   build:
+    #     context: server/mongodb/mongodb-5.0.2-focal
+    #     dockerfile: Dockerfile
+    #     args:
+    #       MONGODB_PATH: ${MONGODB_PATH}
+    #       MONGODB_DATA: ${MONGODB_DATA}
+    #       MONGODB_VERSION: ${MONGODB_VERSION}
+    #   ports:
+    #     - "27017:27017"
+    #     - "27018:27018"
+    #     - "27019:27019"
+    #     - "28017:28017"
+    #   container_name: "mongodb50"
+    #   restart: always
+    #   volumes:
+    #     - ${MONGODB_DATA}/data/db:/data/db:rw
+    #     - ${MONGODB_DATA}/data/configdb/:/data/configdb:rw
+    #     - ${MONGODB_PATH}/conf/mongod.conf:/etc/mongod.conf:rw
+    #     - ${MONGODB_LOG}/mongod.log:/var/log/mongodb/mongod.log:rw
+    #   environment:
+    #     - MONGO_INITDB_ROOT_USERNAME=root
+    #     - MONGO_INITDB_ROOT_PASSWORD=liuxiaowei
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.100
+
+    # mongodb502-express:
+    #   build:
+    #     context: server/mongodb/mongo-express
+    #     dockerfile: Dockerfile
+    #     args:
+    #       MONGODB_VERSION: ${MONGODB_VERSION}
+    #       MONGODB_EXPRESS_PATH: ${MONGODB_EXPRESS_PATH}
+    #   ports:
+    #     - "8090:8090"
+    #   container_name: "mongodb50-express"
+    #   restart: always
+    #   environment:
+    #     ME_CONFIG_OPTIONS_EDITORTHEME: ambiance
+    #     ME_CONFIG_MONGODB_ADMINUSERNAME: root
+    #     ME_CONFIG_MONGODB_ADMINPASSWORD: liuxiaowei
+    #   networks:
+    #     local_network:
+    #       ipv4_address: 172.19.0.101
 
 networks:
     local_network:
       ipam:
         driver: default
         config:
-        - subnet: "172.172.0.0/24"
+        - subnet: "172.19.0.0/16"
