@@ -1,0 +1,97 @@
+version: '3'
+services:
+    nginx121:
+      build:
+        context: server/nginx/nginx-1.21.0
+        dockerfile: Dockerfile
+        args:
+          NGINX_VERSION: ${NGINX_VERSION}
+          NGINX_HTML: ${NGINX_HTML}
+      ports:
+        - "80:80"
+        - "9090:9090"
+        - "9091:9091"
+        - "9092:9092"
+        - "9093:9093"
+        - "9094:9094"
+        - "9095:9095"
+        - "9096:9096"
+      container_name: "nginx121"
+      restart: always
+      volumes:
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${NGINX_HTML}:/usr/share/nginx/html/:rw
+        - ${PWD}/logs/server-logs/nginx/nginx-1.21.0/:/var/log/nginx/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/nginx.conf:/etc/nginx/nginx.conf:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/conf.d:/etc/nginx/conf.d/:rw
+        - ${PWD}/server/nginx/nginx-1.21.0/nginx-modules/:/usr/lib/nginx/modules/:rw
+      cap_add:
+          - ALL
+      environment:
+          RACK_ENV: development
+          SESSION_SECRET:
+      networks:
+        local_network:
+          ipv4_address: 172.172.0.10
+    
+    php73:
+      build:
+        context: server/php/php-7.3.33
+        dockerfile: Dockerfile
+        args:
+          PHP73_PATH: ${PHP73_PATH}
+          PHP73_VERSION: ${PHP73_VERSION}
+          PHP_WWW_PATH: ${PHP_WWW_PATH}
+          REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
+      ports:
+        - "9001:9000"
+      container_name: "php73"
+      restart: always
+      volumes:
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PHP73_SITE_LOG_DIR}:/var/log/php/web:rw
+        - ${PWD}/server/php/php-7.3.33/php/php.ini:/usr/local/etc/php/php.ini:rw
+        - ${PWD}/server/php/php-7.3.33/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php-7.3.33/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+        - ${PWD}/logs/server-logs/php/php-7.3.33/php-fpm.log:/var/log/php/php-fpm.log:rw
+      tty: true
+      depends_on:
+          - nginx121
+      networks:
+        local_network:
+          ipv4_address: 172.172.0.20
+
+
+    php74:
+      build:
+        context: server/php/php-7.4.22
+        dockerfile: Dockerfile
+        args:
+          PHP74_PATH: ${PHP74_PATH}
+          PHP74_VERSION: ${PHP74_VERSION}
+          PHP_WWW_PATH: ${PHP_WWW_PATH}
+          REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
+      ports:
+        - "9002:9000"
+      container_name: "php74"
+      restart: always
+      volumes:
+        - ${PHP_WWW_PATH}:/data/htdocs/php/:rw
+        - ${PHP74_SITE_LOG_DIR}:/var/log/php/web:rw
+        - ${PWD}/server/php/php-7.4.22/php/php.ini:/usr/local/etc/php/php.ini:rw
+        - ${PWD}/server/php/php-7.4.22/php-fpm.d/:/usr/local/etc/php-fpm.d/:rw
+        - ${PWD}/server/php/php-7.4.22/php-fpm.conf:/usr/local/etc/php-fpm.conf:rw
+        - ${PWD}/logs/server-logs/php/php-7.4.22/php-fpm.log:/var/log/php/php-fpm.log:rw
+      tty: true
+      depends_on:
+          - nginx121
+      networks:
+        local_network:
+          ipv4_address: 172.172.0.30
+
+networks:
+    local_network:
+      ipam:
+        driver: default
+        config:
+        - subnet: "172.172.0.0/24"
