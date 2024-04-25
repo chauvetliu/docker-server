@@ -1,6 +1,7 @@
 .DS_Store
 server/test/*
 *.log
+htdocs/*
 htdocs/php/*
 htdocs/go/*
 htdocs/python/*
