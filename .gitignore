@@ -19,3 +19,4 @@ htdocs/web/*
 server/nginx/nginx-1.21.0/fastcgi_param_mysql
 server/nginx/nginx-1.21.0/conf.d/*
 .idea/*
+wwwroot/*
