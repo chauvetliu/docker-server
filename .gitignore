@@ -1,0 +1,11 @@
+.DS_Store
+.idea/*
+*.log
+dump.rdb
+
+other/*
+logs/*
+data/*
+htdocs/*
+wwwroot/*
+packages/*

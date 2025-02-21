@@ -1,0 +1,61 @@
+services:
+    nginx1274:
+      build:
+        context: server/nginx/nginx-${NGINX_VERSION}
+        dockerfile: Dockerfile
+        args:
+          NGINX_VERSION: ${NGINX_VERSION}
+          NGINX_HTML: ${NGINX_HTML}
+      ports:
+        - "80:80"
+        - "8080:8080"
+        - "8081:8081"
+        - "8082:8082"
+        - "8083:8083"
+      container_name: "nginx1274"
+      restart: always
+      volumes:
+        - ${WWWROOT_PATH}:/data/wwwroot/:rw
+        - ${NGINX_HTML}:/usr/share/nginx/html/:rw
+        - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/nginx:/etc/nginx/:rw
+        - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/modules/:/usr/lib/nginx/modules/:rw
+        - ${PWD}/logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw  
+      cap_add:
+          - ALL
+      environment:
+          RACK_ENV: development
+          SESSION_SECRET:
+      networks:
+        local_network:
+          ipv4_address: 172.172.0.10
+
+    php74:
+      build:
+        context: server/php/php-${PHP74_VERSION}
+        dockerfile: Dockerfile
+        args:
+          PHP74_PATH: ${PHP74_PATH}
+          PHP_WWW_PATH: ${PHP_WWW_PATH}
+          PHP74_VERSION: ${PHP74_VERSION}
+          REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
+      ports:
+        - "9000:9000"
+      container_name: "php74"
+      restart: always
+      volumes:
+        - ${PHP_WWW_PATH}:/data/wwwroot/php/:rw
+        - ${PWD}/server/php/php-7.4.33/:/usr/local/etc/:rw
+        - ${PWD}/logs/server-logs/php/php-${PHP74_VERSION}/:/var/log/php/:rw
+      tty: true
+      depends_on:
+          - nginx1274
+      networks:
+        local_network:
+          ipv4_address: 172.172.0.20
+
+networks:
+    local_network:
+      ipam:
+        driver: default
+        config:
+        - subnet: "172.172.0.0/24"
