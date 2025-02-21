@@ -43,7 +43,7 @@
 首先，将项目克隆到本地：
 
 ```bash
-git clone https://github.com/yourusername/docker-server.git
+git clone https://github.com/chauvetliu/docker-server.git
 cd docker-server
 ```
 
@@ -111,6 +111,13 @@ services:
 ## 贡献
 
 欢迎贡献代码和提出建议！请通过 GitHub 提交 Pull Request 或 Issue。
+
+## 作者信息
+
+**作者**: Chauvetliu  
+**联系邮箱**: chauvetliu@163.com  
+
+如果您有任何问题或建议，请随时通过上述邮箱与我联系。期待您的反馈和支持！
 
 ## 许可证
 
