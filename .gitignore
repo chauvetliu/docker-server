@@ -8,3 +8,4 @@ logs/*
 data/*
 htdocs/*
 wwwroot/*
+packages/*
