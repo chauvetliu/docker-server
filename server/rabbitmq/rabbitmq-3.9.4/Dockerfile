@@ -4,12 +4,32 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-ARG RABBITMQ_PATH
-
 
 # The official Canonical Ubuntu Focal image is ideal from a security perspective,
 # especially for the enterprises that we, the RabbitMQ team, have to deal with
 FROM ubuntu:20.04
+
+# 设置维护者信息
+LABEL author="chauvetliu@163.com"
+
+# 在FROM之后定义的ARG变量可以在FROM之后的所有指令中使用。
+ARG RABBITMQ_PATH
+ARG USE_CUSTOM_APT_SOURCE
+
+# 更改docker源
+# 注意：COPY 是一个独立的指令，不能直接嵌套在 RUN 指令中
+COPY ./config/sources.list /tmp/sources.list
+
+# 执行cp替换
+RUN if [ "$USE_CUSTOM_APT_SOURCE" = "true" ]; then \
+        echo "RabbitMQ Use custom source.list"; \
+        #备份源文件
+        mv /etc/apt/sources.list /etc/apt/sources.list.default; \
+        #替换新源
+        cp /tmp/sources.list /etc/apt/sources.list; \
+    else \
+        echo "Use default source.list"; \
+    fi
 
 RUN set -eux; \
 	apt-get update; \

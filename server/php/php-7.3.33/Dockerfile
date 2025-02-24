@@ -4,16 +4,34 @@
 # date: 2022-12-24
 #
 
-ARG PHP73_PATH
+# 因ARG作用域规则，在FROM之前定义的ARG只能在FROM中使用，FROM之后不可使用
 ARG PHP73_VERSION
 
 #镜像信息
 FROM php:${PHP73_VERSION}-fpm
 
+# 设置维护者信息
 LABEL author="chauvetliu@163.com"
 
-#更改docker源
-#COPY sources.list /etc/apt/sources.list
+# 在FROM之后定义的ARG变量可以在FROM之后的所有指令中使用。
+ARG APP_ENV
+ARG PHP73_PATH
+ARG USE_CUSTOM_APT_SOURCE
+
+# 更改docker源
+# 注意：COPY 是一个独立的指令，不能直接嵌套在 RUN 指令中
+COPY ./config/sources.list /tmp/sources.list
+
+# 执行cp替换
+RUN if [ "$USE_CUSTOM_APT_SOURCE" = "true" ]; then \
+        echo "PHP7.3 Use custom source.list"; \
+        #备份源文件
+        mv /etc/apt/sources.list /etc/apt/sources.list.default; \
+        #替换新源
+        cp /tmp/sources.list /etc/apt/sources.list; \
+    else \
+        echo "Use default source.list"; \
+    fi
 
 #日志目录
 ENV PHP_WEBLOG_PATH=/var/log/php

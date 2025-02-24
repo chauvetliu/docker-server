@@ -1,11 +1,13 @@
 services:
     nginx1274:
       build:
-        context: server/nginx/nginx-${NGINX_VERSION}
-        dockerfile: Dockerfile
+        context: server
+        dockerfile: nginx/nginx-${NGINX_VERSION}/Dockerfile
         args:
-          NGINX_VERSION: ${NGINX_VERSION}
+          APP_ENV: ${APP_ENV}
           NGINX_HTML: ${NGINX_HTML}
+          NGINX_VERSION: ${NGINX_VERSION}
+          USE_CUSTOM_APT_SOURCE: ${USE_CUSTOM_APT_SOURCE}
       ports:
         - "80:80"
         - "8080:8080"
@@ -19,25 +21,27 @@ services:
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
         - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/nginx:/etc/nginx/:rw
         - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/modules/:/usr/lib/nginx/modules/:rw
-        - ${PWD}/logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw  
+        - ${PWD}/logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw
       cap_add:
           - ALL
       environment:
-          RACK_ENV: development
-          SESSION_SECRET:
+          RACK_ENV: ${APP_ENV}
+          SESSION_SECRET: ${SESSION_SECRET}
       networks:
         local_network:
-          ipv4_address: 172.172.0.10
+          ipv4_address: 172.20.0.10
 
     php74:
       build:
-        context: server/php/php-${PHP74_VERSION}
-        dockerfile: Dockerfile
+        context: server
+        dockerfile: php/php-${PHP74_VERSION}/Dockerfile
         args:
+          APP_ENV: ${APP_ENV} 
           PHP74_PATH: ${PHP74_PATH}
           PHP_WWW_PATH: ${PHP_WWW_PATH}
           PHP74_VERSION: ${PHP74_VERSION}
           REDIS_DOWNLOAD_URL: ${REDIS_DOWNLOAD_URL}
+          USE_CUSTOM_APT_SOURCE: ${USE_CUSTOM_APT_SOURCE}
       ports:
         - "9000:9000"
       container_name: "php74"
@@ -51,11 +55,12 @@ services:
           - nginx1274
       networks:
         local_network:
-          ipv4_address: 172.172.0.20
+          ipv4_address: 172.20.0.11
 
 networks:
-    local_network:
-      ipam:
-        driver: default
-        config:
-        - subnet: "172.172.0.0/24"
+  local_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.20.0.0/16"
+          gateway: 172.20.0.1

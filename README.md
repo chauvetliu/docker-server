@@ -107,6 +107,10 @@ services:
       - "5432:5432"
 ```
 
+## 说明
+
+Docker Compose 使用了v2.x版本，默认使用最新的特性。
+
 ## 贡献
 
 欢迎贡献代码和提出建议！请通过 GitHub 提交 Pull Request 或 Issue。

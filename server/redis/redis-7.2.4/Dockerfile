@@ -1,19 +1,37 @@
+#
 # Redis Dockerfile
 # chauvetliu@163.com
-# 2021-08-19
+#
 
-ARG REDIS_PATH
 ARG REDIS_VERSION
 
 #FROM ubuntu:18.04
 FROM debian:buster-slim
 
+# 设置维护者信息
 LABEL author="chauvetliu@163.com"
 
-ENV REDIS_VERSION 7.2.4
+# 在FROM之后定义的ARG变量可以在FROM之后的所有指令中使用。
+ARG REDIS_PATH
+ARG REDIS_DOWNLOAD_URL
+ARG USE_CUSTOM_APT_SOURCE
+
+# 更改docker源
+# 注意：COPY 是一个独立的指令，不能直接嵌套在 RUN 指令中
+COPY ./config/sources.list /tmp/sources.list
+
+# 执行cp替换
+RUN if [ "$USE_CUSTOM_APT_SOURCE" = "true" ]; then \
+        echo "Redis Use custom source.list"; \
+        #备份源文件
+        mv /etc/apt/sources.list /etc/apt/sources.list.default; \
+        #替换新源
+        cp /tmp/sources.list /etc/apt/sources.list; \
+    else \
+        echo "Use default source.list"; \
+    fi
+
 ENV REDIS_PACKAGE_PATH ./package/
-ENV REDIS_DOWNLOAD_URL http://download.redis.io/releases/redis-${REDIS_VERSION}.tar.gz
-ENV REDIS_DOWNLOAD_SHA 4b9a75709a1b74b3785e20a6c158cab94cf52298aa381eea947a678a60d551ae
 
 #创建用户权限
 RUN groupadd -r -g 999 redis && useradd -r -g redis -u 999 redis
@@ -37,7 +55,7 @@ RUN apt-get update \
 	rm -rf /var/lib/apt/lists/*; \
 	\
 	echo "下载Redis， $REDIS_DOWNLOAD_SHA *redis.tar.gz" | sha256sum -c -; \
-	wget -O redis.tar.gz "$REDIS_DOWNLOAD_URL"; \
+	wget -O redis.tar.gz "${REDIS_DOWNLOAD_URL}"; \
 	mkdir -p /usr/src/redis/redis-${REDIS_VERSION}; \
 	tar -xzf redis.tar.gz -C /usr/src/redis/redis-${REDIS_VERSION} --strip-components=1; \
 	rm redis.tar.gz \
