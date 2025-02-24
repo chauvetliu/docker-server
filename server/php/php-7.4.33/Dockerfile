@@ -3,16 +3,36 @@
 # author: chauvetliu@163.com
 #
 
-ARG PHP74_PATH
+# 因ARG作用域规则，在FROM之前定义的ARG只能在FROM中使用，FROM之后不可使用
 ARG PHP74_VERSION
 
 #镜像信息
 FROM php:${PHP74_VERSION}-fpm
 
+# 设置维护者信息
 LABEL author="chauvetliu@163.com"
 
-#更改docker源
-#COPY sources.list /etc/apt/sources.list
+# 在FROM之后定义的ARG变量可以在FROM之后的所有指令中使用。
+ARG APP_ENV
+ARG PHP74_PATH
+ARG USE_CUSTOM_APT_SOURCE
+
+# 打印 ARG 变量的内容
+RUN echo "APP_ENV为: ${APP_ENV}";
+RUN echo "PHP74_PATH为: ${PHP74_PATH}";
+RUN echo "是否自定义源文件: ${USE_CUSTOM_APT_SOURCE}";
+
+# 更改docker源
+# 注意：COPY 是一个独立的指令，不能直接嵌套在 RUN 指令中
+COPY ./config/sources.list /tmp/sources.list
+
+# 执行cp替换
+RUN if [ "$USE_CUSTOM_APT_SOURCE" = "true" ]; then \
+        echo "Use custom source.list"; \
+        cp /tmp/sources.list /etc/apt/sources.list; \
+    else \
+        echo "Use default source.list"; \
+    fi
 
 #日志目录
 ENV PHP_WEBLOG_PATH=/var/log/php
@@ -70,7 +90,6 @@ RUN apt-get update \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mysqli \
     && docker-php-ext-install exif \
     && docker-php-ext-install pcntl \
     && docker-php-ext-install pdo \
@@ -117,6 +136,8 @@ RUN apt-get update \
     #rm -r /tmp/*; \
     rm -rf /var/lib/apt/lists/*;
 
+# 安装 mysqli 扩展
+RUN docker-php-ext-install mysqli
 
 #创建和授权目录权限
 RUN mkdir -p ${PHP_WEBLOG_PATH} && chown -R www-data:www-data ${PHP_WEBLOG_PATH} && chmod -R 777 ${PHP_WEBLOG_PATH}

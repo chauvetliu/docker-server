@@ -4,12 +4,8 @@
 # date: 2021-09-19
 #
 
+# 因ARG作用域规则，在FROM之前定义的ARG只能在FROM中使用，FROM之后不可使用
 ARG PHP8_VERSION
-ARG PHP8_REDIS
-ARG PHP8_PATH
-ARG PHP8_MONGODB
-
-#docker pull php:8.1.0RC2-fpm-buster
 
 #镜像信息
 FROM php:8.1.0RC2-fpm-buster
@@ -18,10 +14,24 @@ FROM php:8.1.0RC2-fpm-buster
 
 #ENV GPG_KEYS=528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 39B641343D8C104B2B146DC3F9C39DC0B9698544 F1F692238FBC1666E5A5CCD4199F9DFEF6FFBAFD
 
+# 设置维护者信息
 LABEL author="chauvetliu@163.com"
 
-#更改docker源
-#COPY sources.list /etc/apt/sources.list
+ARG PHP8_REDIS
+ARG PHP8_PATH
+ARG PHP8_MONGODB
+
+# 更改docker源
+# 注意：COPY 是一个独立的指令，不能直接嵌套在 RUN 指令中
+COPY ./config/sources.list /tmp/sources.list
+
+# 执行cp替换
+RUN if [ "$USE_CUSTOM_APT_SOURCE" = "true" ]; then \
+        echo "Use custom source.list"; \
+        cp /tmp/sources.list /etc/apt/sources.list; \
+    else \
+        echo "Use default source.list"; \
+    fi
 
 #日志目录
 ENV PHP_WEBLOG_PATH=/var/log/php
