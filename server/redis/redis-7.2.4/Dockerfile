@@ -22,7 +22,10 @@ COPY ./config/sources.list /tmp/sources.list
 
 # 执行cp替换
 RUN if [ "$USE_CUSTOM_APT_SOURCE" = "true" ]; then \
-        echo "Use custom source.list"; \
+        echo "Redis Use custom source.list"; \
+        #备份源文件
+        mv /etc/apt/sources.list /etc/apt/sources.list.default; \
+        #替换新源
         cp /tmp/sources.list /etc/apt/sources.list; \
     else \
         echo "Use default source.list"; \
