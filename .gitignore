@@ -9,3 +9,4 @@ data/*
 htdocs/*
 wwwroot/*
 packages/*
+target/

@@ -1,5 +1,6 @@
 services:
     nginx1274:
+      container_name: "nginx1274"   
       build:
         context: server
         dockerfile: nginx/nginx-${NGINX_VERSION}/Dockerfile
@@ -8,30 +9,30 @@ services:
           NGINX_HTML: ${NGINX_HTML}
           NGINX_VERSION: ${NGINX_VERSION}
           USE_CUSTOM_APT_SOURCE: ${USE_CUSTOM_APT_SOURCE}
+      environment:
+          RACK_ENV: ${APP_ENV}
+          SESSION_SECRET: ${SESSION_SECRET}
       ports:
         - "80:80"
         - "8080:8080"
         - "8081:8081"
         - "8082:8082"
         - "8083:8083"
-      container_name: "nginx1274"
-      restart: always
       volumes:
         - ${WWWROOT_PATH}:/data/wwwroot/:rw
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
-        - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/nginx:/etc/nginx/:rw
-        - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/modules/:/usr/lib/nginx/modules/:rw
-        - ${PWD}/logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw
+        - ./server/nginx/nginx-${NGINX_VERSION}/nginx:/etc/nginx/:rw
+        - ./server/nginx/nginx-${NGINX_VERSION}/modules/:/usr/lib/nginx/modules/:rw
+        - ./logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw
       cap_add:
           - ALL
-      environment:
-          RACK_ENV: ${APP_ENV}
-          SESSION_SECRET: ${SESSION_SECRET}
+      restart: always
       networks:
         local_network:
           ipv4_address: 172.20.0.10
 
     php74:
+      container_name: "php74"
       build:
         context: server
         dockerfile: php/php-${PHP74_VERSION}/Dockerfile
@@ -44,18 +45,53 @@ services:
           USE_CUSTOM_APT_SOURCE: ${USE_CUSTOM_APT_SOURCE}
       ports:
         - "9000:9000"
-      container_name: "php74"
-      restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/wwwroot/php/:rw
-        - ${PWD}/server/php/php-7.4.33/:/usr/local/etc/:rw
-        - ${PWD}/logs/server-logs/php/php-${PHP74_VERSION}/:/var/log/php/:rw
-      tty: true
+        - ./server/php/php-7.4.33/:/usr/local/etc/:rw
+        - ./logs/server-logs/php/php-${PHP74_VERSION}/:/var/log/php/:rw
       depends_on:
-          - nginx1274
+        - nginx1274
+      restart: always    
+      tty: true
       networks:
         local_network:
           ipv4_address: 172.20.0.11
+
+    java8:
+      container_name: java8
+      build:
+        context: .
+        dockerfile: server/java/java8/Dockerfile
+        target: build-stage       # 多阶段构建时指定阶段（可选）
+      environment:
+        - TZ=${CONTAINER_TIMEZONE}
+        - JAVA_OPTS=-Xmx512m      # JVM 参数（会覆盖 Dockerfile 中的配置）  
+      ports:
+        - "8888:8888"
+      volumes:
+        - ./logs/java-logs:/app/logs
+        # 开发环境热部署（根据需要选择）
+        # - ./src:/app/src
+        # - ./pom.xml:/app/pom.xml
+      restart: unless-stopped     # 自动重启策略
+      healthcheck:                # 健康检查
+        test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+      logging:
+        driver: json-file
+        options:
+          max-size: "10m"
+          max-file: "3"
+      deploy:
+        resources:                # 资源限制
+          limits:
+            cpus: '1'
+            memory: 512M
+      networks:
+        local_network:
+          ipv4_address: 172.20.0.50
 
 networks:
   local_network:
