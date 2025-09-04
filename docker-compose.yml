@@ -58,9 +58,14 @@ services:
           ipv4_address: 172.20.0.11
 
     clash:
-      image: dreamacro/clash:latest
-      container_name: clash
+      image: lsposed/clash-meta
+      container_name: clash_meta
       restart: always
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+      mem_limit: 100m
       ports:
         - "7890:7890"   # HTTP 代理
         - "7891:7891"   # SOCKS5 代理
