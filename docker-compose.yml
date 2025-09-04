@@ -65,7 +65,6 @@ services:
         driver: "json-file"
         options:
           max-size: "50m"
-      mem_limit: 100m
       ports:
         - "7890:7890"   # HTTP 代理
         - "7891:7891"   # SOCKS5 代理
