@@ -65,7 +65,7 @@ services:
         - "7890:7890"   # HTTP 代理
         - "7891:7891"   # SOCKS5 代理
       volumes:
-        - ./server/clash:/root/.config/clash:ro
+        - ./server/clash:/root/.config/clash
       networks:
         local_network:
           ipv4_address: 172.20.0.12   
