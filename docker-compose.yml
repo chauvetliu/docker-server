@@ -57,8 +57,8 @@ services:
         local_network:
           ipv4_address: 172.20.0.11
 
-    clash:
-      image: lsposed/clash-meta
+    clash_meta:
+      image: yikyo/clash.meta:latest
       container_name: clash_meta
       restart: always
       logging:
@@ -69,6 +69,7 @@ services:
       ports:
         - "7890:7890"   # HTTP 代理
         - "7891:7891"   # SOCKS5 代理
+        - "9090:9090"   # 管理页面
       volumes:
         - ./server/clash:/root/.config/clash
       networks:

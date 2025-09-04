@@ -57,18 +57,24 @@ services:
         local_network:
           ipv4_address: 172.20.0.11
 
-    clash:
-      image: dreamacro/clash:latest
-      container_name: clash
+    clash_meta:
+      image: yikyo/clash.meta:latest
+      container_name: clash_meta
       restart: always
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+      mem_limit: 100m
       ports:
         - "7890:7890"   # HTTP 代理
         - "7891:7891"   # SOCKS5 代理
+        - "9090:9090"   # 管理页面
       volumes:
-        - ./server/clash:/root/.config/clash:ro
+        - ./server/clash:/root/.config/clash
       networks:
         local_network:
-          ipv4_address: 172.20.0.12     
+          ipv4_address: 172.20.0.12      
 
     java8:
       container_name: java8
