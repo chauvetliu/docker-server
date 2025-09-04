@@ -68,7 +68,43 @@ services:
         - ./server/clash:/root/.config/clash:ro
       networks:
         local_network:
-          ipv4_address: 172.20.0.12   
+          ipv4_address: 172.20.0.12     
+
+    java8:
+      container_name: java8
+      build:
+        context: .
+        dockerfile: server/java/java8/Dockerfile
+        target: build-stage       # 多阶段构建时指定阶段（可选）
+      environment:
+        - TZ=${CONTAINER_TIMEZONE}
+        - JAVA_OPTS=-Xmx512m      # JVM 参数（会覆盖 Dockerfile 中的配置）  
+      ports:
+        - "8888:8888"
+      volumes:
+        - ./logs/java-logs:/app/logs
+        # 开发环境热部署（根据需要选择）
+        # - ./src:/app/src
+        # - ./pom.xml:/app/pom.xml
+      restart: unless-stopped     # 自动重启策略
+      healthcheck:                # 健康检查
+        test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+      logging:
+        driver: json-file
+        options:
+          max-size: "10m"
+          max-file: "3"
+      deploy:
+        resources:                # 资源限制
+          limits:
+            cpus: '1'
+            memory: 512M
+      networks:
+        local_network:
+          ipv4_address: 172.20.0.50
 
 networks:
   local_network:
