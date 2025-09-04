@@ -58,7 +58,7 @@ services:
           ipv4_address: 172.20.0.11
 
     clash_meta:
-      image: yikyo/clash.meta:latest
+      image: yikyo/clash.meta:v1.19.13
       container_name: clash_meta
       restart: always
       logging:
