@@ -10,3 +10,4 @@ htdocs/*
 wwwroot/*
 packages/*
 target/
+clash/*
