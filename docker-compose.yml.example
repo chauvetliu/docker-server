@@ -57,8 +57,8 @@ services:
         local_network:
           ipv4_address: 172.20.0.11
 
-    clash_meta:
-      image: yikyo/clash.meta:latest
+     clash_meta:
+      image: yikyo/clash.meta:v1.19.13
       container_name: clash_meta
       restart: always
       logging:
@@ -70,10 +70,10 @@ services:
         - "7891:7891"   # SOCKS5 代理
         - "9090:9090"   # 管理页面
       volumes:
-        - ./server/clash:/co/.config/clash
+        - ./server/clash:/etc/.clash.meta.d
       networks:
         local_network:
-          ipv4_address: 172.20.0.12      
+          ipv4_address: 172.20.0.12       
 
     java8:
       container_name: java8

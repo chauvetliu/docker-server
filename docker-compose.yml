@@ -70,7 +70,7 @@ services:
         - "7891:7891"   # SOCKS5 代理
         - "9090:9090"   # 管理页面
       volumes:
-        - ./server/clash:/root/.config/clash
+        - ./server/clash:/etc/.clash.meta.d
       networks:
         local_network:
           ipv4_address: 172.20.0.12   
