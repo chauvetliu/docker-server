@@ -10,4 +10,4 @@ htdocs/*
 wwwroot/*
 packages/*
 target/
-server/clash/*
+server/clash/config.yaml
