@@ -68,7 +68,7 @@ services:
       ports:
         - "7890:7890"   # HTTP 代理
         - "7891:7891"   # SOCKS5 代理
-        - "9090:9090"   # 管理页面
+        - "9090:9090"
       volumes:
         - ./server/clash:/etc/.clash.meta.d
       networks:
