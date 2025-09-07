@@ -1,5 +1,6 @@
 services:
     nginx1274:
+      container_name: "nginx1274"   
       build:
         context: server
         dockerfile: nginx/nginx-${NGINX_VERSION}/Dockerfile
@@ -8,30 +9,30 @@ services:
           NGINX_HTML: ${NGINX_HTML}
           NGINX_VERSION: ${NGINX_VERSION}
           USE_CUSTOM_APT_SOURCE: ${USE_CUSTOM_APT_SOURCE}
+      environment:
+          RACK_ENV: ${APP_ENV}
+          SESSION_SECRET: ${SESSION_SECRET}
       ports:
         - "80:80"
         - "8080:8080"
         - "8081:8081"
         - "8082:8082"
         - "8083:8083"
-      container_name: "nginx1274"
-      restart: always
       volumes:
         - ${WWWROOT_PATH}:/data/wwwroot/:rw
         - ${NGINX_HTML}:/usr/share/nginx/html/:rw
-        - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/nginx:/etc/nginx/:rw
-        - ${PWD}/server/nginx/nginx-${NGINX_VERSION}/modules/:/usr/lib/nginx/modules/:rw
-        - ${PWD}/logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw
+        - ./server/nginx/nginx-${NGINX_VERSION}/nginx:/etc/nginx/:rw
+        - ./server/nginx/nginx-${NGINX_VERSION}/modules/:/usr/lib/nginx/modules/:rw
+        - ./logs/server-logs/nginx/nginx-${NGINX_VERSION}/logs:/var/log/nginx/:rw
       cap_add:
           - ALL
-      environment:
-          RACK_ENV: ${APP_ENV}
-          SESSION_SECRET: ${SESSION_SECRET}
+      restart: always
       networks:
         local_network:
           ipv4_address: 172.20.0.10
 
     php74:
+      container_name: "php74"
       build:
         context: server
         dockerfile: php/php-${PHP74_VERSION}/Dockerfile
@@ -44,18 +45,35 @@ services:
           USE_CUSTOM_APT_SOURCE: ${USE_CUSTOM_APT_SOURCE}
       ports:
         - "9000:9000"
-      container_name: "php74"
-      restart: always
       volumes:
         - ${PHP_WWW_PATH}:/data/wwwroot/php/:rw
-        - ${PWD}/server/php/php-7.4.33/:/usr/local/etc/:rw
-        - ${PWD}/logs/server-logs/php/php-${PHP74_VERSION}/:/var/log/php/:rw
-      tty: true
+        - ./server/php/php-7.4.33/:/usr/local/etc/:rw
+        - ./logs/server-logs/php/php-${PHP74_VERSION}/:/var/log/php/:rw
       depends_on:
-          - nginx1274
+        - nginx1274
+      restart: always    
+      tty: true
       networks:
         local_network:
           ipv4_address: 172.20.0.11
+
+    clash_meta:
+      image: yikyo/clash.meta:v1.19.13
+      container_name: clash_meta
+      restart: always
+      logging:
+        driver: "json-file"
+        options:
+          max-size: "50m"
+      ports:
+        - "7890:7890"   # HTTP 代理
+        - "7891:7891"   # SOCKS5 代理
+        - "9090:9090"
+      volumes:
+        - ./server/clash:/etc/.clash.meta.d
+      networks:
+        local_network:
+          ipv4_address: 172.20.0.12   
 
 networks:
   local_network:

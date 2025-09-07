@@ -9,3 +9,5 @@ data/*
 htdocs/*
 wwwroot/*
 packages/*
+target/
+server/clash/config.yaml

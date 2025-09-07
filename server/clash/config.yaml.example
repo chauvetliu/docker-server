@@ -1,0 +1,41 @@
+#将自己购买的代理配置文件config.yaml 复制到此目录下即可
+
+
+#以下是config.yaml示例
+
+# 基础设置
+mixed-port: 7890          # 本地代理端口（HTTP/SOCKS5）
+allow-lan: false         # 禁用局域网共享（个人使用可关闭）
+mode: Rule               # 规则模式
+log-level: silent        # 静默模式（不输出日志）
+
+# 代理服务器配置（示例：1个 Shadowsocks 节点）
+proxies:
+  - name: "SS-Node"      # 节点名称
+    type: ss             # 协议类型（ss/vmess/trojan）
+    server: example.com  # 服务器地址
+    port: 443            # 端口
+    cipher: chacha20-ietf-poly1305  # 加密方式
+    password: "your-password"        # 密码
+    udp: true            # 启用 UDP
+
+# 代理组（默认使用唯一节点）
+proxy-groups:
+  - name: "Proxy"
+    type: select          # 手动选择（单节点可忽略类型）
+    proxies:
+      - "SS-Node"
+
+# DNS 配置（解决污染）
+dns:
+  enable: true
+  listen: 127.0.0.1:53  # 仅本地监听（需手动设置系统 DNS）
+  nameserver:
+    - "8.8.8.8"         # Google DNS（优先）
+    - "114.114.114.114" # 国内备用
+
+# 规则集（基础分流）
+rules:
+  - DOMAIN-SUFFIX,cn,DIRECT      # 国内域名直连
+  - GEOIP,CN,DIRECT              # 中国 IP 直连
+  - MATCH,Proxy                  # 其他流量走代理

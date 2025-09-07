@@ -2,11 +2,11 @@
 
 ## 项目简介
 
-本项目提供一个基于 `docker-compose` 的 Docker 服务部署解决方案，帮助开发者快速构建和部署分布式服务环境以及测试环境。通过规范的目录结构和预配置的 `docker-compose.yml` 文件，用户可以轻松地启动和管理多个服务，如数据库、Web 服务器、消息队列等。
+本项目提供一个基于 Docker Compose 的 Docker 服务部署解决方案，帮助开发者快速构建和部署分布式服务环境以及测试环境。通过规范的目录结构和预配置的 `docker-compose.yml` 文件，用户可以轻松地启动和管理多个服务，如数据库、Web 服务器、消息队列等。
 
 ## 项目特点
 
-- **快速部署**：通过 `docker-compose` 一键启动多个服务，简化了复杂的部署流程。
+- **快速部署**：通过 Docker Compose 一键启动多个服务，简化了复杂的部署流程。
 - **目录规范**：项目目录结构清晰，便于管理和维护。
 - **多服务支持**：支持多种常用服务，如 MySQL、Redis、Nginx、MongoDB 等，满足不同场景的需求。
 - **灵活配置**：用户可以根据需要自定义 `docker-compose.yml` 文件，灵活调整服务配置。
@@ -49,10 +49,14 @@ cd docker-server
 
 ### 2. 启动服务
 
-使用 `docker-compose` 启动所有服务：
+使用 Docker Compose 启动所有服务：
 
 ```bash
+# 如果您使用的是 Docker Compose V1（带连字符版本）
 docker-compose up -d
+
+# 如果您使用的是 Docker Compose V2（插件版本，使用空格）
+docker compose up -d
 ```
 
 ### 3. 停止服务
@@ -60,7 +64,11 @@ docker-compose up -d
 停止所有服务：
 
 ```bash
+# Docker Compose V1
 docker-compose down
+
+# Docker Compose V2  
+docker compose down
 ```
 
 ### 4. 查看日志
@@ -107,9 +115,34 @@ services:
       - "5432:5432"
 ```
 
+## Docker Compose 版本说明
+
+本项目支持 Docker Compose 的两种命令格式：
+
+1. **Docker Compose V1**（传统版本）：使用 `docker-compose` 命令（带连字符）
+2. **Docker Compose V2**（新版插件）：使用 `docker compose` 命令（空格）
+
+### 版本检查
+
+要确定您系统上安装的 Docker Compose 版本，可以运行以下命令：
+
+```bash
+# 检查 V1 版本
+docker-compose --version
+
+# 检查 V2 版本  
+docker compose version
+```
+
+### 兼容性说明
+
+- 如果您使用的是 **Docker Desktop**（Windows/Mac），默认已安装 V2 版本
+- 如果您在 **Linux** 上手动安装，可能需要额外安装 `docker-compose-plugin` 来获得 V2 版本
+- V1 版本目前已弃用，建议使用 V2 版本以获得最新功能和持续支持
+
 ## 说明
 
-Docker Compose 使用了v2.x版本，默认使用最新的特性。
+Docker Compose V2.x 版本使用了最新的特性和改进，提供了更好的性能和兼容性。建议用户优先使用 V2 版本的命令格式。
 
 ## 贡献
 
